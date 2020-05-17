@@ -1,0 +1,38 @@
+enum Items:String,CaseIterable{
+
+        case a = "A"
+        case b = "B"
+        case c = "C"
+    
+    static var values: [String] { return  Items.allCases.map { $0.rawValue } }
+}
+struct ContentView: View {
+   var body: some View {
+
+      ShowPicker(pickerName:"MyPicker",
+                 items:Items.values,
+      style:SegmentedPickerStyle())
+
+   }
+}
+struct ShowPicker<S : PickerStyle> : View {
+    
+    @State private var selection:Int = 0
+    let pickerName:String
+    let items:[String]
+    let style:S     // DefaultPickerStyle(), SegmentedPickerStyle(), WheelPickerStyle()
+    
+    var body: some View {
+        VStack(alignment:.center) {
+            Text(items[selection])
+            Divider()
+ 
+            Picker(selection: $selection, label:
+                  Text(pickerName)) {
+                         ForEach(0 ..< items.count) { index in
+                               Text(self.items[index]).tag(index)
+                         }
+            }.pickerStyle(style)
+        }
+    }
+}

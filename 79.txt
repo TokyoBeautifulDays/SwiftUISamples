@@ -1,0 +1,51 @@
+struct Control: View {
+    var body: some View {
+        Text("control")
+            .font(Font.custom("Times", size:16.0))
+    }
+}
+struct MyText: View {
+    var text:String
+    var color:Color
+    var size:CGFloat
+    var body: some View {
+        Text(text)
+            .font(Font.custom("Times", size:size))
+            .foregroundColor(color)
+    }
+}
+struct ContentView: View {
+    var body: some View {
+      Form {
+            Section(header: MyText(text:"Header1", color:.blue, size:20.0) ) {
+                Control()
+                HStack {
+                   Spacer()
+                   Section(header: MyText(text:"Header1.1", color:.blue, size:16.0)) {
+                         Control()
+                    }
+                    Spacer()
+                    Divider()
+                    Spacer()
+                    Section(header: MyText(text:"Header1.2", color:.blue, size:16.0)) {
+                         Control()
+                    }
+                    Spacer()
+                }
+              }
+
+            Section(header: MyText(text:"Header2", color:.red, size:20.0),
+                    footer: MyText(text:"footer", color:.green, size:16.0) ) {
+                        HStack {
+                            Spacer()
+                            Control()
+                            Spacer()
+                            Divider()
+                            Spacer()
+                            Control()
+                            Spacer()
+                        }
+          }
+      }
+   }
+}

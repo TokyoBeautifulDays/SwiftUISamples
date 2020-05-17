@@ -1,0 +1,66 @@
+(1)
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:0) {
+            HStack(spacing:0) {
+                SubView(myImage:"red")
+                SubView(myImage:"green")
+            }
+             SubView(myImage:"yellow")
+        }
+    }
+}
+
+struct SubView: View {
+    var myImage: String
+    var body: some View {
+             Image(self.myImage)
+    }
+}
+
+
+(2)
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:0) {
+            HStack(spacing:0) {
+                SubView(myImage:"red")
+                SubView(myImage:"green")
+            }
+            .frame(height:50)
+             SubView(myImage:"yellow")
+        }
+    }
+}
+
+struct SubView: View {
+    var myImage: String
+    var body: some View {
+             Image(self.myImage)
+    }
+}
+
+(3)
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:0) {
+            HStack(spacing:0) {
+                SubView(myImage:"red")
+                    .frame(width:50)
+                SubView(myImage:"green")
+            }
+            .frame(height:50)
+             SubView(myImage:"yellow")
+        }
+    }
+}
+
+struct SubView: View {
+    var myImage: String
+    var body: some View {
+             Image(self.myImage)
+    }
+}

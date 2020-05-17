@@ -1,0 +1,51 @@
+struct ContentView: View {
+   var body: some View {
+        Circle()
+            .fill(Color.gray)
+            .position(x:0, y:0)
+            .border(Color.blue, width:4)
+            .frame(width:150, height:150)
+            .position(x:320, y:500)
+   }
+}
+
+--
+
+struct ContentView: View {
+   var body: some View {
+        SubView1()
+            .border(Color.blue, width:4)
+            .frame(width:150, height:150)
+            .position(x:320, y:500)
+   }
+}
+
+struct SubView1: View {
+   var body: some View {
+        Circle()
+            .fill(Color.gray)
+            .position(x:0, y:0)
+            .border(Color.red, width:10)
+    }
+}
+
+--
+
+struct ContentView: View {
+   var body: some View {
+        SubView1()
+            .position(x:0, y:0)
+            .border(Color.blue, width:4)
+            .frame(width:150, height:150)
+            .position(x:320, y:500)
+   }
+}
+
+struct SubView1: View {
+   var body: some View {
+        Circle()
+            .fill(Color.gray)
+            .position(x:0, y:0)
+            .border(Color.red, width:10)
+    }
+}

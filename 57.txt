@@ -1,0 +1,66 @@
+struct MyPreference:Equatable {
+    let index:Int
+    let rect:CGRect
+}
+struct MyPreferenceKey: PreferenceKey {
+    typealias Value = [MyPreference]
+
+    static var defaultValue: [MyPreference] = []
+    static func reduce(value: inout [MyPreference], nextValue: () -> [MyPreference]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+struct ContentView: View {
+    @State private var active = 0
+    @State private var rects: [CGRect] = Array<CGRect>(repeating: CGRect(), count: 3)
+    var alignment:VerticalAlignment = .lastTextBaseline
+    var body: some View {
+        ZStack(alignment: .topLeading)  {
+            Circle()
+            .stroke(lineWidth: 2.0)
+            .foregroundColor(Color.green)
+            .frame(width: rects[active].size.width, height: rects[active].size.height)
+            .offset(x: rects[active].origin.x, y: rects[active].origin.y)
+            .zIndex(1)
+           VStack {
+              HStack {
+                Button(action: { self.active = 0 }){ Text("0").font(Font.custom("Gothic", size:40)) }.padding()
+                Button(action: { self.active = 1 }){ Text("1").font(Font.custom("Gothic", size:40)) }.padding()
+
+              }
+              HStack(spacing:35) {
+                   Text("A")
+                        .font(Font.custom("Gothic", size:40))
+                        .foregroundColor(.orange)
+                        .background(ItemView(index:0))
+                    Text("B")
+                        .font(Font.custom("Gothic", size:40))
+                        .foregroundColor(.orange)
+                        .background(ItemView(index:1))
+              }
+                .onPreferenceChange(MyPreferenceKey.self) { preferences in
+                     for p in preferences {
+                            self.rects[p.index] = p.rect
+                     }
+                    #if DEBUG
+                    print(self.rects)
+                    #endif
+                 }
+        }.coordinateSpace(name: "mySpace")
+    }
+    }
+}
+
+struct ItemView: View {
+    var index:Int
+    var body: some View {
+        GeometryReader { geometry in
+            Rectangle()
+                .fill(Color.clear)
+                .preference(
+                    key: MyPreferenceKey.self,
+                    value: [MyPreference(index: self.index, rect: geometry.frame(in: .named("mySpace")))]
+                )
+        }
+    }
+}

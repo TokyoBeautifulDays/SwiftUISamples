@@ -1,0 +1,38 @@
+struct ContentView: View {
+    @State private var input: String = ""
+    var body: some View {
+        VStack {
+// border
+                        TextField("Border", text: self.$input)
+                              .padding(5)
+                              .frame(width:200)
+                            .border(Color.gray.opacity(0.5), width:1)
+
+// overlay + RoundedRectangle
+                        TextField("RoundRectangle", text: self.$input)
+                               .padding(5)
+                               .frame(width:200)
+                               .overlay(
+                                     RoundedRectangle(cornerRadius: 4)
+                                          .stroke(Color.gray, lineWidth: 1)
+                                )
+                        
+// PlainTextFieldStyle（装飾なし）
+                            TextField("PlainTextFieldStyle", text: self.$input)
+                                .padding(5)
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .frame(width:200)
+                        
+// RoundedBorderTextFieldStyle(ボーダーが付く)
+                        TextField("RoundedBorderTextFieldStyle", text: self.$input)
+                               .textFieldStyle(RoundedBorderTextFieldStyle())
+                               .frame(width:200)
+                        
+// DefaultTextFieldStyle (プラットフォーム毎に設定されたスタイル)
+                        TextField("DefaultTextFieldStyle", text: self.$input)
+                               .padding(5)
+                               .textFieldStyle(DefaultTextFieldStyle())
+                               .frame(width:200)
+        }
+    }
+}

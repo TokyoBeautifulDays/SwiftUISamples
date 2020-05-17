@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+        
+       Button(action: { print("PrimitiveButtonStyle") })
+       {
+        Text("Double tap here")
+            .font(Font.custom("Georgia", size:28))
+       }.buttonStyle(MyButtonStyle())
+    }
+}
+struct MyButtonStyle: PrimitiveButtonStyle {
+    
+       func makeBody(configuration: Self.Configuration) -> some View {
+        
+        return configuration.label
+                    .background(
+                        Rectangle().fill(Color.green).frame(width:300, height:60)
+                     )
+                     .onTapGesture(count: 2) {
+                         configuration.trigger()
+                     }
+    }
+}

@@ -1,0 +1,43 @@
+struct ContentView: View {
+    private let shared: Int = 0
+    @State var destination: AnyView? = nil
+    @State var tag: Int? = nil
+
+    var body: some View {
+        NavigationView {
+            VStack  {
+                Button(action: {
+                         self.destination = AnyView(SubView1(tag:self.$tag))
+                         self.tag = self.shared }
+                    ) { Text("Push here to SubView1") }.padding()
+                
+                Button(action: {
+                         self.destination = AnyView(SubView2(tag:self.$tag))
+                         self.tag = self.shared }
+                    ) { Text("Push here to SubView2") }.padding()
+                
+                NavigationLink(destination: destination,
+                               tag: shared,
+                               selection: $tag) { EmptyView() }
+            }
+        }
+    }
+}
+struct SubView1: View {
+    @Binding var tag: Int?
+    var body: some View {
+        Group {
+            Text("SubView1")
+            Button("Go back to Home") { self.tag = nil }.padding()
+        }
+    }
+}
+struct SubView2: View {
+    @Binding var tag: Int?
+    var body: some View {
+        Group {
+            Text("SubView2")
+            Button("Go back to Home") { self.tag = nil }.padding()
+        }
+    }
+}

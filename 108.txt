@@ -1,0 +1,14 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+           Button("This is Button")
+               { print("Button-1 is pushed") }.padding()
+
+           Button(action: { print("Pushed") })
+               { Text("Hello")
+                .foregroundColor(.red)
+                .font(Font.custom("Georgia", size:32)) }
+        }
+    }
+}

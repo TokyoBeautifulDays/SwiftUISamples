@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+
+        TabView {
+            Text("First")
+                .tabItem {
+                    Image(systemName: "1.square.fill")
+                    Text("First")
+                }.tag(0)
+            Text("Second")
+                .tabItem {
+                    Image(systemName: "2.square.fill")
+                    Text("Second")
+                }.tag(1)
+            Text("Third")
+                .tabItem {
+                    Image(systemName: "3.square.fill")
+                    Text("Third")
+                }.tag(2)
+        }
+        .font(Font.custom("Times", size:32))
+    }
+}

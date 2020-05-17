@@ -1,0 +1,22 @@
+struct ContentView: View {
+    @State private var count = 0
+    @State private var state:Bool = false
+    var body: some View {
+        VStack {
+            Text("Number is \(self.count)").padding()
+            Stepper(onIncrement: { self.count += 1 },
+                    onDecrement: { self.count -= 1 },
+                    onEditingChanged: { changed in self.state = changed })
+            {
+                HStack {
+                    Image(systemName: "star.fill").foregroundColor(.red)
+                    Text("Enter Number")
+                }
+            }
+            .frame(width:300)
+            .padding()
+            
+            state ? Text("True") : Text("false")
+        }
+    }
+}

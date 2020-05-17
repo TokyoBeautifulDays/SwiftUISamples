@@ -1,0 +1,41 @@
+struct ContentView: View {
+    @State private var angle: Double = 0
+
+    var body: some View {
+        VStack {
+           Button(action: { self.angle += 45 }) {
+               Text("Tap here")
+               .padding(30)
+               .foregroundColor(.red)
+               .font(.system(size:28))
+            }
+            Image(systemName:"arrow.up.circle.fill")
+            .rotationEffect(.degrees(angle))
+            .animation(.spring())
+            .foregroundColor(Color.green)
+            .font(.system(size:78))
+        }
+    }
+}
+
+---
+
+struct ContentView: View {
+    @State private var on:Bool = false
+
+    var body: some View {
+        VStack {
+            Button(action: { self.on.toggle() }) {
+               Text("Tap here")
+               .padding(30)
+               .foregroundColor(.red)
+               .font(.system(size:28))
+            }
+            Image(systemName:"arrow.up.circle.fill")
+            .frame(width:400, alignment: on ? .leading : .trailing)
+            .animation(.interactiveSpring(response: 3, dampingFraction: 0.5))
+            .foregroundColor(Color.green)
+            .font(.system(size:78))
+        }
+    }
+}

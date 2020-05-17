@@ -1,0 +1,36 @@
+struct PassThrough<Content>: View where Content: View {
+    let color:Color
+    let content: () -> Content
+
+    init(color:Color, @ViewBuilder content: @escaping () -> Content) {
+        self.color = color
+        self.content = content
+    }
+
+    var body: some View {
+        content().foregroundColor(color)
+    }
+
+}
+
+func passBy<T:View>(color:Color, @ViewBuilder closure:() -> T) -> some View { closure().foregroundColor(color) }
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            PassThrough(color:.red) {
+                Text("one")
+                Text("two")
+                Text("three")
+            }.padding()
+            
+           Divider()
+            
+            passBy(color:.blue) {
+                Text("four")
+                Text("five")
+                Text("six")
+            }.padding()
+        }
+    }
+}

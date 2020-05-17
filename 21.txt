@@ -1,0 +1,62 @@
+struct ContentView: View {
+
+    enum SubViews: View, Hashable, Identifiable {
+        case subview1
+        case subview2
+        case subview3
+        case subview4
+        var id:SubViews { self }
+        var body: some View {
+
+            switch self {
+            case .subview1: return AnyView(SubView1())
+            case .subview2: return AnyView(SubView2())
+            case .subview3: return AnyView(Text("Hello"))
+            case .subview4: return AnyView(EmptyView())
+            }
+        }
+    }
+
+    @State var subviews: SubViews?
+
+    var body: some View {
+        VStack {
+            Button("SubView1") {
+                self.subviews = .subview1
+            }.padding()
+            Button("SubView2") {
+                self.subviews = .subview2
+            }.padding()
+            Button("SubView3") {
+                self.subviews = .subview3
+            }.padding()
+            Button("SubView4") {
+                self.subviews = .subview4
+            }.padding()
+            Button("nothing") {
+                self.subviews = nil
+             }.padding()
+        }
+        .sheet(item: self.$subviews) { $0 }
+    }
+}
+
+struct SubView1: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    var body: some View {
+        Button("Go Back to Home from SubView1") {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
+}
+
+struct SubView2: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    var body: some View {
+        Button("Go Back to Home from SubView2") {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
+}

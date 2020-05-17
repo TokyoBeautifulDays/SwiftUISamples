@@ -1,0 +1,20 @@
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"]
+    var body: some View {
+        ScrollView(showsIndicators: true) {
+            VStack {
+                ForEach (myData, id:\.self) { data in
+                    VStack {
+                          HStack {
+                               Image(systemName: "star.fill") .foregroundColor(Color.red)
+                               Text(data)
+                               Spacer()
+                          }.padding()
+                          Divider()
+                     }
+               }
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: Alignment.topLeading)
+       }
+    }
+}

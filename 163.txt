@@ -1,0 +1,32 @@
+extension Array where Element: Equatable {
+    mutating func remove(value: Element) {
+        if let i = self.firstIndex(of: value) {
+            self.remove(at: i)
+        }
+    }
+}
+struct ContentView: View {
+         @State var editMode: EditMode = .inactive
+         @State var selection = Set<String>()
+         @State var data = ["A", "B", "C", "D"]
+
+         var body: some View {
+            VStack {
+                Button("edit mode button") {
+                    self.editMode
+                        = self.editMode == EditMode.active ? EditMode.inactive : EditMode.active
+                }.padding()
+                Divider().background(Color.red)
+                List(self.data, id:\.self, selection: $selection) { item in
+                    Text(item)
+                }.environment(\.editMode, .constant(self.editMode))
+                if self.editMode == EditMode.active {
+                    VStack {
+                        Button("Delete ?") {
+                            _ = self.selection.map { self.data.remove(value:$0) }
+                        }
+                    }
+                }
+            }
+        }
+}

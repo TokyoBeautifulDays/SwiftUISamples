@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+// system Fontサイズ指定
+            Text("Hello World")
+                .font(.largeTitle)
+            
+// system Fontサイズ、デザインを指定
+            Text("Hello World")
+                .font(.system(.largeTitle, design: .rounded))
+            
+ // system Fontの固定size、weight、designを指定
+            Text("Hello")
+                .font(.system(size: 38, weight: .black, design: .rounded))
+            
+ // custom Font種別、サイズを指定
+            Text("Hello World")
+                .font(.custom("Georgia", size:38))
+        }
+        
+    }
+}

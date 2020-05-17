@@ -1,0 +1,23 @@
+struct ContentView: View {
+    @State private var on = false
+    var body: some View {
+        VStack {
+            on ? Text("On") : Text("Off")
+
+ // case-1
+            Toggle(isOn: $on) {  Text("Toggle Label-1")  }.padding()
+
+ // case-2
+            Toggle("Toggle Label-2", isOn: $on).padding()
+
+ // case-3
+            Toggle(isOn: $on) {
+                Image(systemName: "pencil")
+                    .foregroundColor(.red)
+                    .font(.system(size: 32))
+                    .padding()
+            }
+
+        }.frame(width:350)
+    }
+}

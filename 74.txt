@@ -1,0 +1,9 @@
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C"]
+    var body: some View {
+        List(myData, id:\.self) { data in
+                Image(systemName: "star.fill") .foregroundColor(Color.red)
+                Text(data)
+        }
+    }
+}

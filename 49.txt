@@ -1,0 +1,12 @@
+struct ContentView: View {
+    var pad:CGFloat = 50.0
+    var body: some View {
+        VStack(alignment: .leading) {
+            Image("HR20050")
+                .alignmentGuide(.leading) { _ in 50 }
+            Image("HY10050")
+                .alignmentGuide(.leading) { d in d.width - self.pad}
+            Image("HG5050")
+        }
+    }
+}

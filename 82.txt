@@ -1,0 +1,63 @@
+struct MyText: View {
+    var text:String
+    var color:Color
+    var size:CGFloat
+    var body: some View {
+        Text(text)
+            .font(Font.custom("Times", size:size))
+            .foregroundColor(color)
+    }
+}
+struct ShowToggle: View {
+    @State private var on:Bool = false
+    @State private var name: String = "Mark"
+    
+    var body: some View {
+        VStack {
+            Text("Toggle Switch").font(.headline)
+            Toggle(isOn: $on) {
+                  Text("Option")
+            }
+            .frame(width:300)
+       }
+    }
+}
+struct ShowSlider: View {
+    @State private var x: Double = 50
+    var body: some View {
+        VStack {
+          Text("Percentage- \(Int(x))%")
+          Slider(value: $x, in: 0...100, step:1.0)
+        }
+    }
+}
+struct ShowButton: View {
+    @Binding var clicked:Bool
+    var body: some View {
+        Button("Click here") { self.clicked.toggle() }
+    }
+}
+struct ShowStatus: View {
+    @Binding var clicked:Bool
+    var body: some View {
+        Text("Status is \(String(self.clicked))")
+    }
+}
+
+struct ContentView: View {
+    @State var clicked:Bool = false
+    var body: some View {
+      Form {
+            ShowStatus(clicked:self.$clicked)
+            Section(header: MyText(text:"Header1", color:.blue, size:20.0) ) {
+                ShowToggle()
+                ShowButton(clicked: self.$clicked)
+              }
+
+            Section(header: MyText(text:"Header2", color:.red, size:20.0),
+                    footer: MyText(text:"footer", color:.green, size:16.0) ) {
+                        ShowSlider()
+          }
+      }
+   }
+}

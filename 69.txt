@@ -1,0 +1,36 @@
+struct MyAnimateView<Content: View>: View {
+    let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+        .animation(.easeInOut(duration: 1.0))
+        .transition(.opacity)
+    }
+}
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+            MyAnimateView {
+                HStack {
+                    if show {
+                        Text("Hello World")
+                                  .font(Font.custom("Times", size:CGFloat(32)))
+                                  .foregroundColor(.red)
+                        Image(systemName: "star.fill")
+                                  .foregroundColor(.blue)
+                    }
+                }
+            }
+            Button(action: { self.show.toggle()}) {
+                Text("Push here")
+                   .font(Font.custom("Times", size:CGFloat(32)))
+            }
+        }
+    }
+}

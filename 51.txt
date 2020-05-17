@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+        HStack(alignment: .firstTextBaseline) {
+               Text("Hello\nHello")
+                .font(Font.custom("Gothic", size:40))
+                .foregroundColor(.green)
+               Text("Good Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning")
+               Image("red")
+           }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        HStack(alignment: .lastTextBaseline) {
+               Text("Hello\nHello")
+                .font(Font.custom("Gothic", size:40))
+                .foregroundColor(.green)
+               Text("Good Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning")
+               Image("red")
+           }
+    }
+}

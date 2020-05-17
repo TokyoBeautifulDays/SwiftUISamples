@@ -1,0 +1,90 @@
+extension Color {
+    public init(red: Int, green: Int, blue: Int) {
+        self = Color(red: Double(red)/255.0,
+                     green: Double(green)/255.0,
+                     blue: Double(blue)/255.0)
+    }
+}
+struct ContentView: View {
+    @State private var on:Bool = false
+    @State var duration:Double = 0.35
+
+    var body: some View {
+            VStack {
+                Button(action:{ self.on.toggle() }) {
+                       Text ("Go")
+                         .font(.system(size:20))
+                }.padding()
+                Button(action:{
+                       self.on = false
+                       self.duration = 0
+                   }) {
+                    Text ("Reset")
+                      .font(.system(size:20))
+                    }
+                
+                Group {
+                    Image(systemName:"1.circle.fill")
+                    .foregroundColor(Color(red:160, green:150, blue:60))
+                    .animation(.linear)
+                    .padding()
+                    
+                    Image(systemName:"2.circle.fill")
+                    .foregroundColor(Color(red:200, green:200, blue:200))
+                     .animation(.linear(duration: self.duration))
+                    .padding()
+
+                    Image(systemName:"3.circle.fill")
+                    .foregroundColor(Color.orange)
+                    .animation(.easeIn)
+                    .padding()
+                    
+                    Image(systemName:"4.circle.fill")
+                    .foregroundColor(Color.black)
+                    .animation(.easeIn(duration:self.duration))
+                    .padding()
+                    
+                    Image(systemName:"5.circle.fill")
+                    .foregroundColor(Color.blue)
+                    .animation(.easeInOut)
+                    .padding()
+                        
+                    Image(systemName:"6.circle.fill")
+                    .foregroundColor(Color.gray)
+                     .animation(.easeInOut(duration:self.duration))
+                     .padding()
+                    
+                    Image(systemName:"7.circle.fill")
+                    .foregroundColor(Color(red:150, green:80, blue:200))
+                    .animation(.easeOut)
+                    .padding()
+                        
+                    Image(systemName:"8.circle.fill")
+                    .foregroundColor(Color(red:200, green:100, blue:100))
+                     .animation(.easeOut(duration:self.duration))
+                     .padding()
+                }
+                .frame(width: 400, alignment: on ? .leading : .trailing)
+                .font(.system(size:24))
+                
+                Group {
+                    ShowSlider(value:self.$duration, message: "duration", range: 0.0...3.0, step:0.05)
+                }.frame(width: 380)
+            }
+    }
+}
+struct ShowSlider: View {
+    @Binding var value:Double
+    var message:String
+    var range:ClosedRange<Double>
+    var step:Double
+    var body: some View {
+        VStack {
+            Text(message + " -> \(DoubletoString(value))")
+            Slider(value: self.$value, in: range, step:self.step)
+        }
+    }
+    func DoubletoString(_ num:Double) -> String {
+        return String(format:"%.2f", num)
+    }
+}

@@ -1,0 +1,33 @@
+struct ContentView: View {
+    @State private var on = false
+    var body: some View {
+        VStack {
+
+            Toggle("1234", isOn: $on)
+                .toggleStyle(MyToggleStyle(label:"MyToggleStyle", color:Color.blue))
+
+        }.frame(width:250)
+    }
+}
+struct MyToggleStyle: ToggleStyle {
+    var label = ""
+    var color = Color.red
+    func makeBody(configuration: Self.Configuration) -> some View {
+        Toggle(isOn: configuration.$isOn) {
+            Text(label)
+                .foregroundColor(color)
+                .italic()
+                .font(Font.custom("Times", size:24))
+        }.background(Gradient())
+    }
+    func Gradient() -> some View {
+           return Rectangle()
+           .fill(
+            LinearGradient(
+                gradient: .init(colors: [.green, .white]),
+               startPoint: .leading,
+               endPoint: .trailing
+           )
+        )
+    }
+}

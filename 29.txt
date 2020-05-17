@@ -1,0 +1,18 @@
+var counter = 0
+func upCount() { counter += 1 }
+struct ContentView: View {
+
+    @State var show:Bool = false
+    
+    func makeAlert(reason: String) -> Alert {
+        Alert(title: Text("Alert Title"), message: Text(reason), dismissButton: .default(Text("Button Label"), action: { upCount() }) )
+    }
+
+    var body: some View {
+        VStack {
+              Text("Count = \(counter)")
+              Button("show Alert") { self.show.toggle() }
+                  .alert(isPresented: self.$show){ makeAlert(reason: "Alert Message here") }
+        }
+    }
+}

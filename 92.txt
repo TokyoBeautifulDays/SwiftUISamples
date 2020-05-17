@@ -1,0 +1,26 @@
+struct MyTuple<S:View, T:View>: View
+{
+    var item1:S
+    var item2:T
+    init(@ViewBuilder content: () -> TupleView<(S, T)>) {
+        self.item1 = content().value.0
+        self.item2 = content().value.1
+    }
+    var body: some View {
+        VStack {
+            self.item1
+            self.item2
+        }
+    }
+}
+struct ContentView : View {
+    var body: some View {
+        VStack {
+           MyTuple {
+                  Text("Hello World")
+                  Image("red")
+           }
+            Circle().fill(Color.green).frame(width:100, height:100)
+        }
+    }
+}

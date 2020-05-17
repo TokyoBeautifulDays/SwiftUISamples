@@ -1,0 +1,9 @@
+struct ContentView:View {
+    var body: some View {
+        GeometryReader { geometry in
+            Text("Hello")
+                .foregroundColor(.red).font(.largeTitle)
+                .position(x:geometry.frame(in:.global).width/4, y:geometry.frame(in:.global).height/4)
+        }
+    }
+}

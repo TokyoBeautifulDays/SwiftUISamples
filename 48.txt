@@ -1,0 +1,23 @@
+struct ContentView: View {
+    @State var alignment:HorizontalAlignment = .center
+    
+    var body: some View {
+ 
+        VStack(alignment: self.alignment) {
+            Image("HR20050")
+                .alignmentGuide(.leading, computeValue: { _ in -50 })
+                .alignmentGuide(HorizontalAlignment.center, computeValue: { _ in 100 })
+                .alignmentGuide(.trailing, computeValue: { _ in 0 })
+            Image("HY10050")
+                .alignmentGuide(.leading, computeValue: { _ in 50 })
+                .alignmentGuide(HorizontalAlignment.center, computeValue: { _ in 0 })
+                .alignmentGuide(.trailing, computeValue: { _ in -50 })
+            Image("HG5050")
+               HStack{
+                  Button("leading") { self.alignment = .leading }
+                  Button("center") { self.alignment = .center }
+                  Button("trailing") { self.alignment = .trailing }
+               }
+          }
+    }
+}

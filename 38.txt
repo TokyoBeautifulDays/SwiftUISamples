@@ -1,0 +1,21 @@
+struct ContentView: View {
+    init() {
+        // .large
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font : UIFont(name:"Helvetica", size: 28)!]
+                
+        //  .inline
+        UINavigationBar.appearance().titleTextAttributes = [
+            .foregroundColor: UIColor.red,
+            .font : UIFont(name: "Helvetica", size: 24)!]
+    }
+    var body: some View {
+        NavigationView {
+           VStack {
+              Text("Home View").padding()
+              NavigationLink(destination: SubView1())  { Text("Go to SubView1") }
+           }.navigationBarTitle("HomeView", displayMode:.large)
+        }
+    }
+}

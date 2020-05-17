@@ -1,0 +1,37 @@
+struct ContentView: View {
+    @State var spin: Double = 0.0
+    @State var show:Bool = false
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                    NavigationLink(destination:SubView(show:self.$show),isActive:$show) {
+                    Text("Welcome to Main\nJump to SubView")
+                        .foregroundColor(.white)
+                        .background(Color.green)
+                        .clipShape(Capsule())
+                }
+                .font(.system(size:24, weight:.bold))
+                .rotation3DEffect(.degrees(spin), axis: (x: 1, y: 1, z: 0))
+                .animation(Animation.easeInOut(duration: 8.0), value: spin)
+                .onAppear {self.spin += 360}
+                .onDisappear {self.spin = 0.0}
+            }
+        }
+    }
+    func DoubletoString(_ num:Double) -> String {
+        return String(format:"%.2f", num)
+    }
+}
+struct SubView:View {
+    @Binding var show:Bool
+    
+     var body: some View {
+        VStack {
+            Text("SubView")
+            Button("Back to main") { self.show = false }
+                .navigationBarBackButtonHidden(true)
+                .padding()
+        }.font(.system(size:20, weight: .bold))
+     }
+}

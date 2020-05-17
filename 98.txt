@@ -1,0 +1,37 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+
+// lineLimit(n)  n行を表示
+            Text("12345678901234567890\n12345678901234567890\n1234567890")
+                .lineLimit(2)
+                .font(.system(size:20))
+                .frame(width:300, height:100)
+            
+// lineSpacing 行間のサイズ指定
+            Text("12345678901234567890\n12345678901234567890\n1234567890")
+                .lineSpacing(10)
+                .font(.system(size:20))
+                .frame(width:300, height:150)
+            
+// 複数行のAlignment
+            Text("12345678901234567890\n123456789\n1234")
+                .multilineTextAlignment(.leading)
+                .font(.system(size:20))
+                .padding()
+                .frame(width:300, height:150)
+            
+            Text("12345678901234567890\n123456789\n1234")
+                .multilineTextAlignment(.center)
+                .font(.system(size:20))
+                .padding()
+                .frame(width:300, height:150)
+            
+            Text("12345678901234567890\n123456789\n1234")
+                .multilineTextAlignment(.trailing)
+                .font(.system(size:20))
+                .padding()
+                .frame(width:300, height:150)
+        }
+    }
+}

@@ -1,0 +1,53 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            // 四角形
+            Rectangle()
+                .fill(Color.yellow)
+                .frame(width: 200, height: 50)
+                .padding()
+                .overlay(Text("Rectangle").font(.title).foregroundColor(.blue))
+
+            // 角丸の四角形
+            RoundedRectangle(cornerRadius: 25, style: .circular)
+                .fill(Color.red)
+                .frame(width: 250, height: 50)
+                .padding()
+                .overlay(Text("RoundedRectangle\ncornerRadius").foregroundColor(.white))
+            
+            RoundedRectangle(cornerSize: CGSize(width: 25, height: 25), style: .continuous)
+                .fill(Color.red)
+                .frame(width: 250, height: 50)
+                .padding()
+                .overlay(Text("RoundedRectangle\ncornerSize").foregroundColor(.white))
+
+            // 円
+            Circle()
+                .fill(Color.gray)
+                .frame(width: 200, height: 100)
+                .padding()
+                .overlay(Text("Circle").font(.title).foregroundColor(.white))
+            
+            // 楕円
+            Ellipse()
+                .fill(Color.blue)
+                .frame(width: 200, height: 50)
+                .padding()
+                .overlay(Text("Ellipse").font(.title).foregroundColor(.yellow))
+
+            // 短い辺の角が丸い四角形
+            Capsule()
+                .fill(Color.green)
+                .frame(width: 250, height: 50)
+                .padding()
+                .overlay(Text("RoundedRectangle").font(.title).foregroundColor(.black))
+
+            // テキスト
+            Text("ABC")
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.purple)
+                .cornerRadius(25)
+        }
+    }
+}

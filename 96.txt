@@ -1,0 +1,36 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+// アンダーライン
+            Text("Hello World")
+                .font(.largeTitle)
+                .underline(color:Color.red)
+
+// 取り消し線
+            Text("Hello World")
+                .font(.largeTitle)
+                .strikethrough(color:Color.red)
+
+ // ベースラインの調整
+            Text("Hello World")
+                .font(.custom("Georgia", size:38))
+                .baselineOffset(32.0)
+
+            Divider()
+             Text("fix flower")
+                .font(.custom("AmericanTypewriter", size: 40))
+
+// Tracking
+            Text("fix flower")
+                .font(.custom("AmericanTypewriter", size: 40))
+                .tracking(20)
+
+// Kerning
+            Text("fix flower")
+                .font(.custom("AmericanTypewriter", size: 40))
+                .kerning(20)
+
+        }
+    }
+}

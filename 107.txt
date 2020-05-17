@@ -1,0 +1,20 @@
+import SwiftUI
+import CoreGraphics
+
+struct ContentView: View {
+    let image = UIImage(systemName: "star.fill")
+    var body: some View {
+        VStack {
+            Image("red")
+            Image("HY10050", label:Text("Yellow"))
+            Button(action: { print("button pressed") }) {
+                Image(decorative:"gray")
+                .renderingMode(.original)
+            }
+            Image(systemName: "circle")
+            Image(systemName: "1.square.fill")
+            Image(uiImage: image!)
+            Image((image?.cgImage!)!, scale:1.0, orientation:.right, label:Text("star"))
+        }
+    }
+}

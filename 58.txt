@@ -1,0 +1,52 @@
+struct MyPreference:Equatable {
+    let index:Int
+    let name:String
+    let on:Bool
+}
+struct MyPreferenceKey: PreferenceKey {
+    typealias Value = [MyPreference]
+
+    static var defaultValue: [MyPreference] = []
+    static func reduce(value: inout [MyPreference], nextValue: () -> [MyPreference]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+struct ContentView: View {
+    @State private var on:[Bool] = [false, false]
+
+    var body: some View {
+           VStack {
+            Group {
+               Text("Switch A is  \(self.on[0] ? "On" : "Off")")
+                .padding()
+               Text("Switch B is  \(self.on[1] ? "On" : "Off")")
+                .padding()
+            }.foregroundColor(.red)
+            Divider()
+            ShowToggle(index:0, name:"Switch A").padding()
+            ShowToggle(index:1, name:"Swicth B").padding()
+           }.font(Font.custom("Gothic", size:24))
+           .onPreferenceChange(MyPreferenceKey.self) { preferences in
+                 for p in preferences {
+                    self.on[p.index] = p.on
+                }
+        }
+    }
+}
+struct ShowToggle: View {
+    @State var on:Bool = false
+    var index:Int
+    var name:String
+    
+    var body: some View {
+        HStack {
+            Toggle(isOn: $on) {
+                  Text(name).font(Font.custom("Gothic", size:24))
+            }
+            .preference(
+                key: MyPreferenceKey.self,
+                value: [MyPreference(index: self.index, name: self.name, on: self.on)]
+            )
+        }.frame(width:200, height:30)
+     }
+}

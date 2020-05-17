@@ -1,0 +1,50 @@
+// VStack
+
+struct ContentView: View {
+
+    var body: some View {
+       VStack {
+            Circle()
+                  .fill(Color.red)
+                  .frame(width:100, height:100)
+            Image("HG5050")
+            Text("VStack")
+                  .font(Font.custom("Times", size:28))
+        }
+    }
+}
+
+
+// HStack
+
+struct ContentView: View {
+
+    var body: some View {
+        HStack {
+            Circle()
+                  .fill(Color.red)
+                  .frame(width:100, height:100)
+            Image("HG5050")
+            Text("HStack")
+                  .font(Font.custom("Times", size:28))
+        }
+    }
+}
+
+
+// ZStack
+
+struct ContentView: View {
+
+    var body: some View {
+        ZStack {
+            Circle()
+                  .fill(Color.red)
+                  .frame(width:100, height:100)
+            Image("HG5050")
+            Text("ZStack")
+                  .font(Font.custom("Times", size:28))
+                .foregroundColor(Color.white)
+        }
+    }
+}

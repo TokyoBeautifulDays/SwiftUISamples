@@ -1,0 +1,19 @@
+struct ContentView: View {
+    @State private var angle: Double = 0
+
+    var body: some View {
+        VStack {
+           Button(action: { self.angle += 45 }) {
+               Text("Tap here")
+               .padding(30)
+               .foregroundColor(.red)
+               .font(.system(size:28))
+            }
+            Image(systemName:"arrow.up.circle.fill")
+            .rotationEffect(.degrees(angle))
+            .animation(.spring())
+            .foregroundColor(Color.green)
+            .font(.system(size:78))
+        }
+    }
+}

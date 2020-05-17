@@ -1,0 +1,88 @@
+struct Square: Shape {
+    var transform:CGAffineTransform
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+  
+        path.addRect(CGRect(x: 0,
+                            y: 0,
+                            width: 100,
+                            height: 100))
+        path.addLine(to: CGPoint(x:100, y: 100))
+        return path.applying(transform)
+    }
+}
+struct TransformOption: View {
+    @Binding var angle:CGFloat
+    @Binding var multiX:CGFloat
+    @Binding var multiY:CGFloat
+    @Binding var tranX:CGFloat
+    @Binding var tranY:CGFloat
+    var transform: CGAffineTransform = CGAffineTransform()
+    var body: some View {
+        VStack {
+            Group {
+                Text("Rotation Degree = \(CGFloattoString(angle))")
+                Slider(value: $angle, in: 0...360).frame(width:350)
+            }
+            Group {
+                Text("ScaleX = \(CGFloattoString(multiX))")
+                Slider(value: $multiX, in: -1.5...2.5).frame(width:350)
+                Text("ScaleY = \(CGFloattoString(multiY))")
+                Slider(value: $multiY, in: -1.5...2.5).frame(width:350)
+            }
+            Group {
+                Text("translationX = \(CGFloattoString(tranX))")
+                Slider(value: $tranX, in: -100...100).frame(width:350)
+                Text("translationY = \(CGFloattoString(tranY))")
+                Slider(value: $tranY, in: -100...100).frame(width:350)
+            }
+            
+            Button("reset") {
+                self.angle = 0
+                self.multiX = 1
+                self.multiY = 1
+                self.tranX = 0
+                self.tranY = 0
+            }
+        }
+    }
+}
+var transform:CGAffineTransform = CGAffineTransform()
+struct ContentView: View {
+    @State var angle:CGFloat = 0
+    @State var multiX:CGFloat = 1
+    @State var multiY:CGFloat = 1
+    @State var tranX:CGFloat = 0
+    @State var tranY:CGFloat = 0
+
+    var body: some View {
+        VStack {
+            CGAffineTransformationMix()
+            Spacer()
+            ZStack {
+                Square(transform:transform)
+                      .stroke(Color.green,lineWidth:4)
+                Circle().foregroundColor(.red).frame(width:10, height:10)
+                Circle().foregroundColor(.blue).frame(width:10, height:10).position(x:0, y:0)
+              }.frame(width:100, height:100)
+            Spacer()
+            TransformOption(
+                angle:self.$angle,
+                multiX: self.$multiX,
+                multiY: self.$multiY,
+                tranX: self.$tranX,
+                tranY: self.$tranY
+            )
+        }
+    }
+    func CGAffineTransformationMix() -> EmptyView {
+        transform = CGAffineTransform(rotationAngle: angle * CGFloat.pi / 180 )
+        transform = transform.concatenating(CGAffineTransform(scaleX:self.multiX, y:self.multiY))
+        transform = transform.concatenating(CGAffineTransform(translationX:self.tranX, y:self.tranY))
+        return EmptyView()
+    }
+}
+func CGFloattoString(_ num:CGFloat) -> String {
+    return String(format:"%.2f", num)
+}
+

@@ -1,0 +1,18 @@
+struct ContentView: View {
+    @State private var input: String = ""
+    var body: some View {
+        VStack {
+            TextField("Enter ...", text: $input, onEditingChanged: { (changed) in
+
+// onEditingChanged: テキスト入力状態が変化した
+                print("Enter... onEditingChanged - \(changed)")
+            }) {
+
+// onCommit: 入力が確定した
+                print("Enter... onCommit - \(self.input)")
+            }
+            .padding(5)
+            .frame(width:200)
+        }
+    }
+}

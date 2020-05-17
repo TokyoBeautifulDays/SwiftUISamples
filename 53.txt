@@ -1,0 +1,17 @@
+struct ContentView : View {
+    var body: some View {
+        
+        VStack {
+                Circle()
+                    .fill(Color.green)
+        }
+        .frame(width:200, height:200)
+        .background( SubView() )
+    }
+}
+struct SubView: View {
+    var body: some View {
+             RoundedRectangle(cornerRadius: 40, style: .continuous)
+                .fill(Color.yellow.opacity(0.8))
+    }
+}

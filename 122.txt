@@ -1,0 +1,20 @@
+enum Items:Int,CaseIterable{
+
+        case a = 1
+        case b
+        case c
+    
+    static var values: [String] { return  Items.allCases.map { String($0.rawValue) } }
+}
+struct ContentView: View {
+   @State var selection = 0
+   var body: some View {
+    
+    Picker("Picker",
+           selection: $selection)
+    {
+        ForEach(0 ..< Items.values.count) { index in Text(Items.values[index]).tag(index) }
+    }.padding()
+       
+   }
+}

@@ -1,0 +1,18 @@
+struct ContentView: View {
+
+    @State var error: AlertReason?
+    
+    struct AlertReason: Identifiable {
+        let reason: String
+        var id: String { return reason }
+    }
+    
+    func makeAlert(reason: String) -> Alert {
+        Alert(title: Text("Alert Title"), message: Text(reason), dismissButton: .default(Text("Button Label")) )
+    }
+
+    var body: some View {
+        Button("show Alert") { self.error = AlertReason(reason: "Alert Message here") }
+                  .alert(item: $error){ error in makeAlert(reason: error.reason) }
+    }
+}

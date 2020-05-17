@@ -1,0 +1,26 @@
+struct ContentView : View {
+     @State private var isOn = false
+     var body: some View {
+           VStack {
+              ToggleButton(onOff: $isOn)
+           }
+     }
+}
+struct ToggleButton :View {
+    @Binding var onOff:Bool
+    var body: some View {
+          VStack {
+            Toggle(isOn: $onOff) {
+                Text("Toggle")
+            }.padding()
+                .frame(width:240)
+            if onOff {
+                Text("Toggle is On")
+                  .background(Color.green)
+            }
+            else {
+                Text("Toggle is off")
+            }
+          }
+    }
+}

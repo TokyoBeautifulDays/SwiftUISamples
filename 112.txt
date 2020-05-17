@@ -1,0 +1,14 @@
+struct LinearGradientStyle: ButtonStyle {
+ 
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+        .background(Rectangle()
+            .fill(
+                LinearGradient(
+                gradient: .init(colors: [.yellow, .green]), startPoint: .leading, endPoint: .trailing
+                )
+              )
+        )
+
+    }
+}

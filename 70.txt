@@ -1,0 +1,35 @@
+struct MyStack<Content: View>: View {
+    let width:CGFloat
+    let columns: Int
+    let content: () -> Content
+    
+    init(columns: Int, width:CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        self.width = width
+        self.columns = columns
+        self.content = content
+    }
+
+    var body: some View {
+                HStack(alignment: .center) {
+                    ForEach(0 ..< self.columns) { column in
+                        self.content()
+                            .frame(width:self.width/CGFloat(self.columns*2),
+                                   height:self.width/CGFloat(self.columns*2))
+                    }
+                }
+    }
+}
+struct ContentView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollView(.horizontal, showsIndicators: false) {
+            MyStack(columns: 3, width: geometry.size.width) {
+                  Circle()
+                      .foregroundColor(Color.red)
+                  Circle()
+                      .foregroundColor(Color.green)
+            }
+        }
+        }
+    }
+}

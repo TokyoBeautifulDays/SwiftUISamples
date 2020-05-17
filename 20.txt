@@ -1,0 +1,105 @@
+// Button click to go back
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Text("Hello")
+                    .font(.system(size:24))
+                    .padding()
+                    .frame(width:400)
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here to show next")
+                            .font(.system(size:20))
+                            .foregroundColor(.red)
+                            .background(Color.green)
+                     }
+                     .sheet(isPresented: $show){ SubView(isPresented: self.$show) }
+        }
+    }
+}
+
+struct SubView: View {
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        Button("Click to go back") {
+            self.isPresented = false
+        }
+        .font(.system(size:20))
+        .foregroundColor(.white)
+        .background(Color.red)
+    }
+}
+
+// Drag top edge down to go back
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Text("Hello")
+                    .font(.system(size:24))
+                    .padding()
+                    .frame(width:400)
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here to show next")
+                            .font(.system(size:20))
+                            .foregroundColor(.red)
+                            .background(Color.green)
+                     }
+        }.sheet(isPresented: $show){
+            VStack {
+                Text("\n(Drag down Here)")
+                    .foregroundColor(.red)
+                    .font(.headline)
+                Spacer()
+                Text("Please drag top edge down to go back")
+                Spacer()
+            }
+          }
+    }
+}
+
+// dismiss @Environment(\.presentationMode) to go back 
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Text("Hello")
+                    .font(.system(size:24))
+                    .padding()
+                    .frame(width:400)
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here to show next")
+                            .font(.system(size:20))
+                            .foregroundColor(.red)
+                            .background(Color.green)
+                     }
+                     .sheet(isPresented: $show){ SubView() }
+        }
+    }
+}
+
+struct SubView: View {
+    @Environment(\.presentationMode) var presentationMode
+
+    var body: some View {
+        Button("Click to go back") {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+        .font(.system(size:20))
+        .foregroundColor(.white)
+        .background(Color.red)
+    }
+}

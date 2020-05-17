@@ -1,0 +1,22 @@
+struct Ellipse: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.addEllipse(in: CGRect(x: 0,
+                            y: 0,
+                            width: rect.width,
+                            height: rect.height))
+        return path
+    }
+}
+struct ContentView: View {
+
+  var body: some View {
+    VStack {
+          Ellipse()
+            .rotation(.degrees(30))
+            .stroke(Color.green,lineWidth:4)
+            .frame(width: 200, height: 100)
+    }
+  }
+}

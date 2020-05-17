@@ -1,0 +1,42 @@
+// AnyViewを使った場合
+
+struct ContentView: View {
+    @State var flag = false
+    var body: some View {
+        VStack {
+           Button("Push here") { self.flag.toggle()}
+            SubView(flag:self.$flag).padding()
+        }
+    }
+}
+
+struct SubView: View {
+    @Binding var flag:Bool
+    var body: some View {
+            if flag { return AnyView(Image("red")) }
+               else { return AnyView(EmptyView()) }
+    }
+}
+
+
+// Groupを使った場合
+
+struct ContentView: View {
+    @State var flag = false
+    var body: some View {
+        VStack {
+           Button("Push here") { self.flag.toggle()}
+            SubView(flag:self.$flag).padding()
+        }
+    }
+}
+
+struct SubView: View {
+    @Binding var flag:Bool
+    var body: some View {
+        Group {
+            if flag { Image("red") }
+               else { EmptyView() }
+        }
+    }
+}

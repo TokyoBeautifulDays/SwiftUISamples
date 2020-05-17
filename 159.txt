@@ -1,0 +1,28 @@
+struct ContentView: View {
+    @State private var on:Bool = false
+
+    var body: some View {
+        VStack {
+            Button(action: {
+                withAnimation(.easeInOut(duration:2)) { self.on.toggle() }
+              }) {
+                 Text("Tap here").padding(30).foregroundColor(.red).font(.system(size:28))
+            }
+            Image(systemName:"arrow.up.circle.fill")
+                .frame(width:400, alignment: on ? .leading : .trailing).padding(40)
+            .foregroundColor(Color.green)
+            .font(.system(size:78))
+            
+            Image(systemName:"arrow.up.circle.fill")
+            .frame(width:400, alignment: on ? .leading : .trailing).padding(40)
+            .foregroundColor(Color.red)
+            .font(.system(size:78))
+            .animation(nil)
+            
+            Image(systemName:"arrow.up.circle.fill")
+            .frame(width:400, alignment: on ? .leading : .trailing).padding(40)
+            .foregroundColor(Color.yellow)
+            .font(.system(size:78))
+        }
+    }
+}

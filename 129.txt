@@ -1,0 +1,26 @@
+struct ContentView: View {
+  
+    var body: some View {
+        ShowSlider()
+    }
+}
+struct ShowSlider: View {
+    @State private var now: Double = 50.0
+    @State private var state:Bool = false
+    var body: some View {
+        VStack {
+          Text("\(Int(now))%")
+          Slider(value: $now,
+                 in: 0...100,
+                 step:1.0,
+                 onEditingChanged: { changed in self.state = changed },
+                 minimumValueLabel: Text("Min"),
+                 maximumValueLabel: Text("Max"),
+                 label: { Text("label").foregroundColor(.red) }
+            ).padding()
+            
+            state ? Text("True") : Text("false")
+
+        }.frame(width:400)
+    }
+}

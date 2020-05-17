@@ -1,0 +1,53 @@
+struct ContentView: View {
+
+    var body: some View {
+        let tapGesture1 = TapGesture(count: 2)
+                .onEnded { _ in
+                    #if DEBUG
+                    print("Double Tap1 onEnded")
+                    #endif
+                }
+        let tapGesture2 = TapGesture(count: 2)
+                .onEnded { _ in
+                    #if DEBUG
+                    print("Double Tap2 onEnded")
+                    #endif
+                }
+         return VStack {
+                     Group {
+                        VStack {
+                            Text(".gesture")
+                            Image(systemName:"star.fill")
+                                   .font(.system(size:80))
+                                   .foregroundColor(Color.red)
+                                   .frame(width: 100, height: 100)
+                                   .gesture(tapGesture1)    // priority
+                        }
+                     }.gesture(tapGesture2)
+                      .padding()
+            
+                     Group {
+                        VStack {
+                            Text(".highPriorityGesture")
+                            Image(systemName:"heart.fill")
+                                    .font(.system(size:80))
+                                    .foregroundColor(Color.blue)
+                                    .frame(width: 100, height: 100)
+                                    .gesture(tapGesture1)
+                        }
+                    }.highPriorityGesture(tapGesture2) // high priority
+                     .padding()
+            
+                    Group {
+                       VStack {
+                           Text("simultaneousGesture")
+                           Image(systemName:"arrow.up")
+                                    .font(.system(size:80))
+                                    .foregroundColor(Color.green)
+                                    .frame(width: 100, height: 100)
+                                    .gesture(tapGesture1)
+                       }
+                   }.simultaneousGesture(tapGesture2)
+        }
+    }
+}

@@ -1,0 +1,29 @@
+struct SquareStack<Content: View>: View {
+    let number: Int
+    let content: () -> Content
+    
+    init(number: Int, @ViewBuilder content: @escaping () -> Content) {
+        self.number = number
+        self.content = content
+    }
+
+    var body: some View {
+        VStack {
+            ForEach(0 ..< number) { _ in
+                HStack {
+                    ForEach(0 ..< self.number) { _ in
+                        self.content()
+                    }
+                }
+            }
+        }
+    }
+}
+struct ContentView: View {
+    var body: some View {
+        SquareStack(number:4) {
+            Image("greensmall")
+            Image("yellowsmall")
+        }
+    }
+}

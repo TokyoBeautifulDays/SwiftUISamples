@@ -1,0 +1,39 @@
+extension View {
+    func makeCardStyle() -> some View {
+        self
+           .padding()
+           .background(Color.white)
+           .cornerRadius(8)
+           .shadow(radius: 4)
+    }
+}
+struct ContentView: View {
+    @State private var on = false
+    var body: some View {
+        VStack {
+            
+            Toggle("5678", isOn: $on)
+                .toggleStyle(CheckMarkStyle(label:"CheckMarkStyle", color:.blue))
+            
+        }.frame(width:350)
+    }
+}
+struct CheckMarkStyle: ToggleStyle {
+    var label = ""
+    var color = Color.red
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
+        HStack {
+            Text(label)
+                .font(Font.custom("Arial-BoldMT", size:24))
+                .padding()
+            Button(action: { configuration.isOn.toggle() } )
+            {
+                Image(systemName: configuration.isOn
+                    ? "checkmark.square.fill" : "square.fill")
+                    .foregroundColor(color)
+                    .font(.system(size: 32))
+            }
+        }.makeCardStyle()
+    }
+}

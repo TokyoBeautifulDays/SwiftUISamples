@@ -1,0 +1,22 @@
+1. init<S>(_ title: S, destination: Destination) where S : StringProtocol
+2. init<S>(_ title: S, destination: Destination, isActive: Binding<Bool>) where S : StringProtocol
+3. init(destination: Destination, @ViewBuilder label: () -> Label)
+4. init(destination: Destination, isActive: Binding<Bool>, @ViewBuilder label: () -> Label)
+5. init<V>(destination: Destination, tag: V, selection: Binding<V?>, @ViewBuilder label: () -> Label) where V : Hashable
+
+
+1. NavigationLink("Click Here to go to SubView", destination: SubView())
+
+2. NavigationLink("Push here to SubView", destination:SubView(show:self.$flag), isActive:$flag)
+
+3. NavigationLink(destination: SubView()) { Text("Click Here to go to SubView") }
+
+4. NavigationLink( destination:SubView(show:self.$flag), isActive:$flag){ Text("Push Here")  }
+
+5.1 NavigationLink(destination: SubView1(selection:self.$selection), tag: 1, selection: $selection) { EmptyView() }
+
+5.2 NavigationLink(destination: Details(), tag: 1, selection: $selection) {
+                    Button("Press me") {
+                        self.selection = 1
+                    }
+}

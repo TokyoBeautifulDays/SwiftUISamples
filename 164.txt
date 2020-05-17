@@ -1,0 +1,33 @@
+struct ContentView: View {
+    @State var on = false
+         var body: some View {
+            VStack {
+              on ? Text("on is true") : Text("on is false")
+                Toggle("1234", isOn:self.$on)
+                    .toggleStyle(MyToggleStyle(myLabel:"ABCD"))
+                    .frame(width:300)
+            }
+        }
+}
+struct MyToggleStyle: ToggleStyle {
+    var myLabel = ""
+    func makeBody(configuration: Self.Configuration) -> some View {
+        return
+            VStack {
+                // トグル-1
+                Toggle(myLabel, isOn: configuration.$isOn)
+                Divider()
+                HStack {
+                   // labelの表示
+                    configuration.label
+                           .foregroundColor(.green)
+                    Spacer()
+                   // トグル−2
+                    Image(systemName: configuration.isOn ? "checkmark.square" : "square")
+                    .resizable()
+                    .frame(width: 22, height: 22)
+                    .onTapGesture { configuration.isOn.toggle() }
+                 }
+            }
+    }
+}

@@ -1,0 +1,52 @@
+-- AppDelegate.swift
+
+    lazy var persistentContainer: NSPersistentContainer = {
+
+        let container = NSPersistentContainer(name: "MyCoreData")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+
+    }()
+
+
+    func saveContext () {
+
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+
+    }
+
+
+-- SceneDelegate.swift
+
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let contentView = ContentView().environment(\.managedObjectContext, context)
+
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = UIHostingController(rootView: contentView)
+            self.window = window
+            window.makeKeyAndVisible()
+        }
+    }
+
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+
+        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+
+    }

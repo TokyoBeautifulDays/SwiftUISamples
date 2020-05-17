@@ -1,0 +1,22 @@
+struct ContentView: View {
+    var body: some View {
+        Selection()
+    }
+}
+var items = ["A", "B", "C"]
+
+struct Selection : View {
+    @State var selection = Set<String>()
+
+    var body: some View {
+        VStack {
+            NavigationView {
+                List(items, id: \.self, selection: $selection){ item in Text(item) }
+                   .navigationBarItems(trailing: EditButton())
+                   .navigationBarTitle(Text("Selection -> \(selection.count)"))
+            }
+
+            ForEach([String](selection), id: \.self) { item in Text(item) }
+        }
+    }
+}

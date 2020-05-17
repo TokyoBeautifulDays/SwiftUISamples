@@ -1,0 +1,48 @@
+import CoreData
+
+let names = ["Kato", "Fujita", "Aoki", "Mori", "Sugita", "Gotoh", "Hoshino", "Tanaka", "Endoh", "Ishii", "Doi"]
+struct ContentView: View {
+    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    @FetchRequest(
+             entity: MyEntity.entity(),
+             sortDescriptors: [NSSortDescriptor(keyPath: \MyEntity.name, ascending: true)],animation: nil)
+             var items: FetchedResults<MyEntity>
+
+    @State var show = false
+    var body: some View {
+        VStack {
+            Button("Add User") {
+                 let random = Int.random(in: 0..<11)
+                 let entity = MyEntity(context:self.context)
+                     entity.name = names[random]
+                     entity.age = Int16.random(in: 0..<60)
+                     entity.star = Bool.random()
+            }.padding(20)
+            
+            Button("Show User")
+            {
+                self.show.toggle()
+            }.padding(20)
+            
+            if show {
+                ForEach(items, id:\.self) { entity in
+                    HStack {
+                          if entity.name != nil {
+                                Text(entity.name!)
+                                Text(String(entity.age))
+                                 entity.star ? Image(systemName: "star.fill").foregroundColor(Color.red)
+                                                   : Image(systemName: "star.fill").foregroundColor(Color.gray)
+                            
+                            
+                                Button("age") { entity.age += 1 }
+                                Button("star") { entity.star.toggle() }
+                                Button("remove") { self.context.delete(entity) }
+                          }
+                          else { Text("No items") }
+                    }
+                }
+            }
+            Button("Save") { try! self.context.save() }.padding()
+        }
+    }
+}

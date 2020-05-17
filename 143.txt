@@ -1,0 +1,20 @@
+struct ContentView: View {
+   @State var count1:Int = 0
+   @State var on:Bool = false
+
+   var body: some View {
+
+          VStack {
+                Text("LongPress Status =" + (on ? "true" : "false"))
+                Text("total count = \(self.count1)")
+                Text("Long Press here to add 1")
+                      .underline()
+                      .font(.system(size:20))
+                      .onLongPressGesture(minimumDuration: 1,
+                                          maximumDistance: 10,
+                                          pressing: { on in self.on = on }) {
+                               self.count1 += 1
+                           }
+          }
+   }
+}

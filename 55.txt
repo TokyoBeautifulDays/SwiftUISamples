@@ -1,0 +1,21 @@
+struct ContentView : View {
+    var body: some View {
+        VStack {
+                Text("Hello World")
+                    .foregroundColor(.red)
+                .font(Font.custom("Georgia", size:32))
+        }
+        .frame(maxWidth: .infinity, maxHeight: 200)
+        .background(Gradient())
+    }
+    func Gradient() -> some View {
+           return Rectangle()
+           .fill(
+            LinearGradient(
+                gradient: .init(colors: [.yellow, .green]),
+               startPoint: .leading,
+               endPoint: .trailing
+           )
+        )
+    }
+}

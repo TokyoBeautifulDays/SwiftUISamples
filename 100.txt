@@ -1,0 +1,17 @@
+struct ContentView: View {
+      var body: some View {
+        VStack {
+            Text("ABCD")
+                .font(.system(size:80))
+            
+            Text("ABCD")
+                .font(.system(size:80, design:.monospaced))
+
+            Text("ABCD")
+                .font(.system(size:80, design:.rounded))
+
+            Text("ABCD")
+                .font(.system(size:80, design:.serif))
+        }
+    }
+}

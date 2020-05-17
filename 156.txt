@@ -1,0 +1,90 @@
+extension Color {
+    public init(red: Int, green: Int, blue: Int) {
+        self = Color(red: Double(red)/255.0,
+                     green: Double(green)/255.0,
+                     blue: Double(blue)/255.0)
+    }
+}
+struct ContentView: View {
+    @State private var on:Bool = false
+    @State var response:Double = 0.55
+    @State var dampingFraction:Double = 0.3
+    @State var damping:Double = 5.0
+    @State var blendDuration:Double = 0.25
+    @State var mass:Double = 3.0
+    @State var stiffness:Double = 200.0
+    @State var initialVelocity:Double = 0.1
+    
+    
+    var body: some View {
+            VStack {
+                Button(action:{ self.on.toggle() }) {
+                    Text ("Go")
+                      .font(.system(size:20))
+                }.padding()
+                Button(action:{
+                    self.on = false
+                    self.response = 0.55
+                    self.dampingFraction = 0.3
+                    self.damping = 5.0
+                    self.blendDuration = 0.25
+                    self.mass = 3.0
+                    self.stiffness = 200.0
+                    self.initialVelocity = 0.1
+                    
+                }) {
+                    Text ("Reset")
+                      .font(.system(size:20))
+                }
+                
+                Group {
+                    Image(systemName:"1.circle.fill")
+                    .foregroundColor(Color(red:160, green:150, blue:60))
+                    .animation(.spring())
+                    .padding()
+                    
+                    Image(systemName:"2.circle.fill")
+                    .foregroundColor(Color(red:200, green:200, blue:200))
+                    .animation(.spring(response:self.response, dampingFraction:self.dampingFraction, blendDuration: self.blendDuration))
+                    .padding()
+
+                    Image(systemName:"3.circle.fill")
+                    .foregroundColor(Color.orange)
+                     .animation(.interpolatingSpring(mass:self.mass, stiffness:self.stiffness, damping:self.damping, initialVelocity:self.initialVelocity))
+                    .padding()
+                    
+                    Image(systemName:"4.circle.fill")
+                    .foregroundColor(Color.black)
+                    .animation(.interactiveSpring(response:self.response, dampingFraction:self.dampingFraction, blendDuration: self.blendDuration))
+                    .padding()
+                }
+                .frame(width: 400, alignment: on ? .leading : .trailing)
+                .font(.system(size:24))
+                
+                Group {
+                    ShowSlider(value:self.$response, message: "Response", range: 0.0...3.0, step:0.1)
+                    ShowSlider(value:self.$dampingFraction, message: "dampingFraction", range: 0.0...1.0, step:0.5)
+                    ShowSlider(value:self.$blendDuration, message: "blendDuration", range: 0.0...100.0, step:1.0)
+                    ShowSlider(value:self.$mass, message: "mass", range: 0.5...50.0, step:0.1)
+                    ShowSlider(value:self.$stiffness, message: "stiffness", range: 0.5...400.0, step:0.5)
+                    ShowSlider(value:self.$damping, message: "damping", range: 0.5...20.0, step:0.5)
+                    ShowSlider(value:self.$initialVelocity, message: "initialVelocity", range: 0.0...50.0, step:0.1)
+                }.frame(width: 380)
+        }
+    }
+}
+struct ShowSlider: View {
+    @Binding var value:Double
+    var message:String
+    var range:ClosedRange<Double>
+    var step:Double
+    var body: some View {
+        VStack {
+            Text(message + " -> \(DoubletoString(value))")
+            Slider(value: self.$value, in: range, step:self.step)
+        }
+    }
+    func DoubletoString(_ num:Double) -> String {
+        return String(format:"%.2f", num)
+    }
+}

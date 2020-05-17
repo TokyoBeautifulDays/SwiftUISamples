@@ -1,0 +1,10 @@
+struct ContentView : View {
+    @State var count:Int = 0
+    var body: some View {
+        VStack {
+            Button(action: {self.count += 1}) { Text("Push here. count = \(count)") }
+            Text("Button label: EmptyView").padding()
+            Button(action: {self.count = 0}) { EmptyView() }
+        }
+    }
+}

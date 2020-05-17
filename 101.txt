@@ -1,0 +1,24 @@
+struct ContentView: View {
+      var body: some View {
+        VStack {
+            VStack(alignment:.leading) {
+                Text("Mail-0123456789")
+                         .font(Font.system(size:40))
+                Text("Mail-0123456789")
+                         .font(Font.system(size:40).monospacedDigit())
+            }
+            Divider()
+            Text("AaBbCcDd")
+                .font(Font.system(size:80))
+            
+            Text("AaBbCcDd")
+                .font(Font.system(size:80).smallCaps())
+            
+            Text("AaBbCcDd")
+                .font(Font.system(size:80).lowercaseSmallCaps())
+
+            Text("AaBbCcDd")
+                .font(Font.system(size:80).uppercaseSmallCaps())
+        }
+    }
+}

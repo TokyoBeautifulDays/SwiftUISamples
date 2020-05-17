@@ -1,0 +1,19 @@
+struct ContentView: View {
+
+    var body: some View {
+            ZStack {
+                VStack(spacing:0) {
+                        Image("red")
+                        HStack(spacing:0) {
+                                   Image("yellow")
+                                   Image("green")
+                                   Image("pink")
+                        }
+                        Image("gray")
+                }
+               Circle()
+                   .fill(Color.white)
+                   .frame(width:10, height:10)
+           }
+    }
+}

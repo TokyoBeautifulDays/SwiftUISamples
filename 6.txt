@@ -1,0 +1,19 @@
+struct ContentView: View {
+   var body: some View {
+    VStack {
+       Image("red")
+        .frame(width:200, height:200)
+        .position(x:200, y:200)
+    }
+   }
+}
+
+struct ContentView: View {
+   var body: some View {
+    VStack {
+       Image("red")
+        .position(x:200, y:200)
+        .frame(width:200, height:200)
+    }
+   }
+}

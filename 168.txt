@@ -1,0 +1,150 @@
+import CoreData
+
+struct ContentView: View {
+    var body: some View {
+        StartupView()
+    }
+}
+struct StartupView : View {
+    @State var flag:Bool = false
+    @State var name:String = ""
+    
+    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    
+    @FetchRequest(
+        entity: MyEntity.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \MyEntity.name, ascending: false)],
+        animation: nil)
+    var items: FetchedResults<MyEntity>
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                     TextField("Name", text: self.$name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                     Button("Add Friends") {
+                        if self.name != "" { self.addEntity(name: self.name) }
+                     }
+                }.frame(width:380)
+                Divider()
+                List {
+                    ForEach(items, id: \.self){ entity in
+                        HStack {
+                            entity.star ? Image(systemName: "star.fill").foregroundColor(Color.red) : Image(systemName: "star.fill").foregroundColor(Color.gray)
+                            NavigationLink(destination:ShowEntity(entity:entity, flag:self.$flag).environment(\.managedObjectContext, self.context)) {
+                                Text(entity.name ?? "No Name")
+                            }
+                        }
+                    }
+                    .onDelete(perform: delete)
+                }
+                .onDisappear
+                    { do { try self.context.save() } catch { print(error) } }
+                .navigationBarTitle("Friends List")
+                .navigationBarItems(
+                    leading: EditButton(),
+                    trailing: Button(action: { }) {
+                    Text("Open Button")
+                    })
+            }
+        }
+    }
+    func addEntity(name:String) {
+        let entity = MyEntity(context:self.context)
+                  entity.name = name
+                  entity.age = 0
+                  entity.star = false
+        do { try self.context.save() } catch { print(error) }
+    }
+    func delete(offsets: IndexSet) {
+         for index in offsets {
+             let item = items[index]
+             context.delete(item)
+         }
+        do { try self.context.save() } catch { print(error) }
+     }
+}
+struct ShowEntity:View {
+    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var entity:MyEntity
+    @Binding var flag:Bool
+    @State var show:Bool = false
+    var body: some View {
+        CardStyle {
+            Button(action:{
+                self.entity.star.toggle()
+                self.flag.toggle()
+            } ) {
+              entity.star ? Image(systemName: "star.fill").foregroundColor(Color.red)
+                  : Image(systemName: "star.fill").foregroundColor(Color.gray)
+            }.padding(10)
+            
+            
+            VStack(alignment: .leading, spacing:10) {
+                   Text(entity.name ?? "No Name")
+                   Text("Age: \(entity.age)")
+            }.frame(width:350, height:80)
+            HStack {
+                Button(action: { self.show = true }) { Text("Edit") }.padding(10)
+                Button(action: { self.presentationMode.wrappedValue.dismiss() }) { Text("Done") }.padding(10)
+            }.sheet(isPresented: self.$show){ UpdateEntity(entity:self.entity).environment(\.managedObjectContext, self.context) }
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+}
+struct UpdateEntity:View {
+    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var entity:MyEntity
+    @State var name:String = ""
+    @State var age:String = ""
+    var body: some View {
+        VStack {
+            HStack {
+                  Text("Name:")
+                  TextField(entity.name ?? "No Name", text: self.$name)
+                            .keyboardType(.asciiCapable)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onAppear{
+                                  self.name = self.entity.name ?? "No Name"
+                             }
+            }
+            HStack {
+                  Text("Age:")
+                  TextField(String(entity.age), text: self.$age)
+                             .keyboardType(.numberPad)
+                             .textFieldStyle(RoundedBorderTextFieldStyle())
+                             .onAppear{
+                                    self.age = String(self.entity.age)
+                              }
+            }
+            HStack {
+                Button(action: {
+                     self.entity.name = self.name
+                     self.entity.age = Int16(self.age) ?? 0
+                     do { try self.context.save() } catch { print(error) }
+                     self.presentationMode.wrappedValue.dismiss()
+                }) { Text("OK") }.padding(10)
+                Button(action: {
+                     self.presentationMode.wrappedValue.dismiss()
+                }) { Text("Cancel") }.padding(10)
+            }
+        }.frame(width:250, height:300)
+    }
+}
+struct CardStyle<Content> : View where Content : View
+{
+    var content: Content
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    var body: some View {
+        content
+            .padding()
+            .background(Color.white)
+            .cornerRadius(8)
+            .shadow(color: Color.gray, radius: 3, x: 15, y: 10)
+    }
+}

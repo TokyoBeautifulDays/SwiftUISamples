@@ -1,0 +1,32 @@
+struct ContentView: View {
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        
+        // style (dateStyle, timeStyle)
+        // .full, .long, .medium, .short, .none
+        //
+        // formatter.dateFormat = "yyyy-MM-dd"
+        // formatter.dateFormat = "yyyy-MM-dd 'at' HH:mm"
+        return formatter
+    }
+
+    @State private var date = Date()
+    let beforeTenDays = Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+    var body: some View {
+        VStack {
+            DatePicker(selection: $date,
+                       in: beforeTenDays...Date(),
+                       displayedComponents: [.date] )
+               {
+                       Text("Date")
+                        .foregroundColor(Color.red)
+                        .font(.system(size: 20))
+            }.padding()
+
+            Text("Date:   \(date, formatter: dateFormatter)")
+                .font(.system(size: 24))
+        }
+    }
+}

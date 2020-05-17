@@ -1,0 +1,25 @@
+import SwiftUI
+
+struct ContentView : View {
+
+     @State private var isOn = false
+
+     var body: some View {
+
+           VStack {
+                       Toggle(isOn: $isOn) {
+                                     Text("Toggle")
+                       }
+                       .padding()
+
+                       if isOn {
+                                    Text("Toggle is on")
+                                        .background(Color.yellow)
+                       }
+                       else {
+                                    Text(" ")
+                      }
+           }
+           .frame(width:200, height:300)
+     }
+}

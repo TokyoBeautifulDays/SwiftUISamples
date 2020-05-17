@@ -1,0 +1,33 @@
+struct ContentView: View {
+    @State private var items = ["A", "B", "C"]
+    @State var name = ""
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                     TextField("Name:", text: self.$name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                     Button("Add item") {
+                        self.items.append(self.name)
+                     }
+                }.frame(width:380)
+                Divider()
+                List {
+                       ForEach(items, id: \.self) { item in
+                               Text(item)
+                        }
+                        .onDelete(perform: delete)
+                        .onMove(perform: move)
+                }
+                .navigationBarItems(trailing: EditButton())
+            }
+        }
+    }
+
+    func delete(offsets: IndexSet) {
+        items.remove(atOffsets: offsets)
+    }
+    func move(from source: IndexSet, to destination: Int) {
+        items.move(fromOffsets: source, toOffset: destination)
+    }
+}

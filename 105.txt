@@ -1,0 +1,22 @@
+struct ContentView: View {
+    @State private var number:Int = 0
+    
+    static let myFormat: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Enter Number  ")
+                TextField("Number", value: self.$number, formatter:ContentView.myFormat)
+            }
+             .textFieldStyle(RoundedBorderTextFieldStyle())
+            Divider()
+            Text("Typed Number  \(self.number)")
+
+        }.frame(width:300)
+    }
+}

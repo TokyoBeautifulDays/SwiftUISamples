@@ -1,0 +1,19 @@
+extension Text {
+    func myTextStyle() -> some View {
+        self
+           .bold()
+           .underline()
+           .italic()
+           .font(Font.custom("Times", size:32))
+           .foregroundColor(.orange)
+           .border(Color.black, width:1)
+    }
+}
+struct ContentView: View {
+
+    var body: some View {
+
+              Text("Hello World")
+                .myTextStyle()
+    }
+}

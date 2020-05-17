@@ -1,0 +1,30 @@
+var counter = 0
+struct ContentView: View {
+
+    @State var actionsheets: ActionSheets?
+    
+    struct ActionSheets: Identifiable {
+        let reason: String
+        var id: String { return reason }
+    }
+    
+    func makeActionSheet(message:String) -> ActionSheet {
+        ActionSheet(
+            title: Text("ActionSheet Title"),
+            message: Text(message),
+            buttons: [
+                .cancel(Text("Cancel...")),
+                 .default(Text("default"), action:{ counter += 1 }),
+                 .destructive(Text("destructive"), action: { counter = 0 })
+            ]
+        )
+    }
+
+    var body: some View {
+         VStack {
+              Text("count = \(counter)")
+              Button("ActionSheet") {  self.actionsheets = ActionSheets(reason: "Message here") }
+                      .actionSheet(item: $actionsheets){ action in  makeActionSheet(message: action.reason) }
+        }
+    }
+}

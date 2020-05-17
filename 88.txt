@@ -1,0 +1,9 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+           AnyView(Image("red"))
+           AnyView(Text("Hello World").font(Font.custom("Times", size:32)))
+           AnyView(Circle().fill(Color.green).frame(width:100, height:100))
+        }
+    }
+}

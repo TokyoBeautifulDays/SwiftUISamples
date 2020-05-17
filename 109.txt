@@ -1,0 +1,23 @@
+struct ContentView: View {
+    @State var on:Bool = false
+    var body: some View {
+        
+             Button(action: { self.on.toggle() })
+             {
+                if on  {
+                    Image(systemName: "star")
+                       .renderingMode(.template)
+                       .resizable()
+                       .foregroundColor(.red)
+                       .frame(width: 50.0, height: 50.0)
+                }
+                else {
+                    Image(systemName: "heart")
+                        .renderingMode(.original)
+                        .resizable()
+                        .frame(width: 50.0, height: 50.0)
+                }
+            }.padding(20)
+            
+    }
+}

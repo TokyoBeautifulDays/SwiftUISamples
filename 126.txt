@@ -1,0 +1,13 @@
+struct ContentView: View {
+   @State var value:Double = 0
+   var body: some View {
+          VStack {
+            Text("\(self.value)")
+              Stepper("Stepper",
+                      value: self.$value,
+                      in: 0.0...100.0,
+                      step:1.0)
+                 .frame(width:300)
+          }
+   }
+}

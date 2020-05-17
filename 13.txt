@@ -1,0 +1,187 @@
+// VStack
+
+// (.center)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            VStack {
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:25, y:0)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:175, y:0)
+        }.frame(width:200, height:260)
+    }
+}
+
+// (.leading)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            VStack(alignment: .leading) {
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:25, y:0)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:175, y:0)
+        }.frame(width:200, height:260)
+    }
+}
+
+// (.trailing)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            VStack(alignment: .trailing) {
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:25, y:0)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:175, y:0)
+        }.frame(width:200, height:260)
+    }
+}
+
+// HStack
+
+// (.center)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            HStack {
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:25)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:175)
+        }.frame(width:260, height:200)
+    }
+}
+
+// (.top)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            HStack (alignment: .top){
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:25)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:175)
+        }.frame(width:260, height:200)
+    }
+}
+
+
+// (.bottom)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            HStack (alignment: .bottom){
+                 Image("purple")
+                 Image("green")
+            }
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:25)
+            Circle()
+                .fill(Color.red)
+                .frame(width:10, height:10)
+                .position(x:0, y:175)
+        }.frame(width:260, height:200)
+    }
+}
+
+// ZStack
+// (.center)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+                 Image("purple")
+                 Image("green")
+        }.frame(width:200, height:200)
+    }
+}
+
+
+// (.top)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack(alignment: .top) {
+                 Image("purple")
+                 Image("green")
+        }.frame(width:200, height:200)
+    }
+}
+
+// (.leading)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack(alignment: .leading) {
+                 Image("purple")
+                 Image("green")
+        }.frame(width:200, height:200)
+    }
+}
+
+// (.bottom)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack(alignment: .bottom) {
+                 Image("purple")
+                 Image("green")
+        }.frame(width:200, height:200)
+    }
+}
+
+// (.trailing)
+
+struct ContentView: View {
+    var body: some View {
+        ZStack(alignment: .trailing) {
+                 Image("purple")
+                 Image("green")
+        }.frame(width:200, height:200)
+    }
+}

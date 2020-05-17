@@ -1,0 +1,43 @@
+(1)
+
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C"]
+    var body: some View {
+        ForEach(0..<myData.count) {
+            Text(self.myData[$0])
+                  .font(Font.custom("Times", size:32))
+           }
+    }
+}
+
+(2)
+
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C"]
+    var body: some View {
+        ForEach(myData, id:\.self) { data in
+                Text(data)
+                  .font(Font.custom("Times", size:32))
+        }
+    }
+}
+
+(3)
+
+struct MyData: Identifiable {
+    var id = UUID()
+    let content: String
+}
+struct ContentView: View {
+    let myData:[MyData] = [
+        MyData(content:"A"),
+        MyData(content:"B"),
+        MyData(content:"C")
+    ]
+    var body: some View {
+        ForEach(myData) { data in
+                Text(data.content)
+                  .font(Font.custom("Times", size:32))
+        }
+    }
+}

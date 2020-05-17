@@ -1,0 +1,39 @@
+// Shape型に渡す例
+
+let line1 = Path { path in
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 0))
+            }
+struct MyShape: Shape {
+     let path:Path
+     func path(in rect: CGRect) -> Path {
+        return self.path
+     }
+}
+struct ContentView: View {
+
+    var body: some View {
+        MyShape(path: line1)
+        .stroke(Color.green,lineWidth: 5).frame(width:100, height:100)
+  }
+}
+
+// Shape型に渡さず、直接、実行する例
+
+let line1 = Path { path in
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 0))
+            }
+struct ContentView: View {
+
+    var body: some View {
+        line1
+        .stroke(Color.green,lineWidth: 5).frame(width:100, height:100)
+  }
+}

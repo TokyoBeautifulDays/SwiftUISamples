@@ -1,0 +1,32 @@
+struct ContentView: View {
+   @State var count1:Int = 0
+   @State var count2:Int = 0
+
+   var body: some View {
+
+          VStack {
+                Text("total count = \(self.count1)")
+                Text("Tap 3-times here to add 1")
+                      .underline()
+                      .font(.system(size:20))
+                      .onTapGesture(count:3) {
+                            self.count1 += 1
+                       }
+                      .padding()
+            Divider().frame(width:300)
+               Text("total count = \(self.count2)")
+               HStack {
+                    Text("Tap to add 1")
+                           .font(.system(size:20))
+                           .padding(.horizontal)
+                    Group {
+                           Image(systemName: "arrow.right")
+                           Image(systemName:"star.fill")
+                                      .onTapGesture {
+                                             self.count2 += 1
+                                      }
+                    }.font(.system(size:20))
+               }
+          }
+   }
+}

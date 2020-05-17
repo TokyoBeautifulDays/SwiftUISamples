@@ -1,0 +1,48 @@
+struct ContentView: View {
+    @State var selection: Int? = nil
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                Button("Push here to SubView1") {
+                    self.selection = 1
+                }.padding()
+                Button("Push here to SubView2") {
+                    self.selection = 2
+                }.padding()
+                NavigationLink(destination: SubView1(selection:self.$selection),
+                               tag:1,
+                               selection: $selection) {
+                     EmptyView()
+                }
+                NavigationLink(destination: SubView2(selection:self.$selection),
+                               tag:2,
+                               selection: $selection) {
+                    EmptyView()
+                }
+            }
+        }
+    }
+}
+struct SubView1: View {
+    @Binding var selection: Int?
+    var body: some View {
+        Group {
+            Text("SubView1")
+            Button("Go back to Home") {
+                self.selection = nil
+            }
+        }
+    }
+}
+struct SubView2: View {
+    @Binding var selection: Int?
+    var body: some View {
+        Group {
+            Text("SubView2")
+            Button("Go back to Home") {
+                self.selection = nil
+            }
+        }
+    }
+}

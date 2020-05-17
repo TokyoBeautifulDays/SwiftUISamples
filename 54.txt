@@ -1,0 +1,18 @@
+struct ContentView : View {
+    var body: some View {
+        VStack {
+                Circle().fill(Color.green.opacity(0.5))
+        }
+        .frame(width:200, height:200)
+        .background(Triangle())
+    }
+    func Triangle() -> some View {
+           return  GeometryReader { geometry in
+               Path { path in
+                   path.move(to: CGPoint(x:geometry.size.width/2, y:0))
+                   path.addLine(to: CGPoint(x:0, y:geometry.size.height))
+                   path.addLine(to: CGPoint(x:geometry.size.width, y:geometry.size.height))
+                }.fill(Color.red)
+           }
+    }
+}

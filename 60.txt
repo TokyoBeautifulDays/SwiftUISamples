@@ -1,0 +1,51 @@
+struct MyPreference {
+    let bounds: Anchor<CGRect>
+}
+struct MyPreferenceKey: PreferenceKey {
+    typealias Value = [MyPreference]
+    static var defaultValue: [MyPreference] = []
+    static func reduce(value: inout [MyPreference], nextValue: () -> [MyPreference]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+struct ContentView : View {
+    @State private var active: Int = 0
+    var body: some View {
+        VStack {
+            HStack {
+                Button(action: { self.active = 0 }){ Text("0")
+                    .font(Font.custom("Gothic", size:40)) }
+                    .padding()
+                Button(action: { self.active = 1 }){ Text("1")
+                    .font(Font.custom("Gothic", size:40)) }
+                    .padding()
+            }
+            HStack {
+                ItemView(active: $active, label: "A").padding()
+                ItemView(active: $active, label: "B").padding()
+            }
+        }.backgroundPreferenceValue(MyPreferenceKey.self) { preferences in
+           return GeometryReader { geometry in
+            ZStack {
+                Circle()
+                    .stroke(lineWidth: 2.0)
+                    .foregroundColor(Color.green)
+                    .frame(width: geometry[preferences[self.active].bounds].size.width,
+                           height: geometry[preferences[self.active].bounds].size.height)
+                    .offset(x: geometry[preferences[self.active].bounds].minX,
+                            y: geometry[preferences[self.active].bounds].minY)
+              }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            }
+        }
+    }
+}
+struct ItemView: View {
+    @Binding var active: Int
+    let label: String
+    var body: some View {
+        Text(label)
+            .foregroundColor(.orange)
+            .font(Font.custom("Gothic", size:40))
+            .anchorPreference(key: MyPreferenceKey.self, value: .bounds, transform: { [MyPreference(bounds: $0)] })
+    }
+}

@@ -1,0 +1,27 @@
+struct ContentView: View {
+    var body: some View {
+        List {
+                Text("A")
+                Text("B")
+                Text("C")
+        }
+    }
+}
+
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C"]
+    var body: some View {
+        List(myData, id:\.self) { data in
+                Text(data)
+        }
+    }
+}
+
+struct ContentView: View {
+    let myData:[String] = ["A", "B", "C"]
+    var body: some View {
+        List(0..<myData.count) { index in
+            Text(self.myData[index])
+        }
+    }
+}

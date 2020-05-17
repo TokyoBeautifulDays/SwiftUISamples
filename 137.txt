@@ -1,0 +1,36 @@
+struct Curve: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to:CGPoint(x:0, y:rect.height / 2))
+        path.addCurve(to: CGPoint(x:rect.width, y:rect.height / 2),
+                      control1:CGPoint(x:rect.width / 2, y:rect.height * 2),
+                      control2:CGPoint(x:rect.width / 2, y:-rect.height))
+        return path
+    }
+}
+struct QuadCurve: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to:CGPoint(x:0, y:rect.height / 2))
+        path.addQuadCurve(to: CGPoint(x:rect.width, y:rect.height / 2),
+                          control:CGPoint(x:rect.width / 2, y:rect.height))
+        return path
+    }
+}
+struct ContentView: View {
+
+  var body: some View {
+    VStack(spacing:100) {
+              Curve()
+                   .stroke(Color.green,lineWidth: 5)
+                   .border(Color.gray)
+                   .frame(width: 200, height: 200)
+              QuadCurve()
+                   .stroke(Color.green,lineWidth: 5)
+                   .border(Color.gray)
+                   .frame(width: 200, height: 200)
+        }
+  }
+}

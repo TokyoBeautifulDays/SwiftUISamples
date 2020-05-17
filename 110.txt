@@ -1,0 +1,28 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+
+             Button(action: { print("DefaultButtonStyle clicked!") })
+             {
+                  Text("DefaultButtonStyle")
+             }
+             .buttonStyle(DefaultButtonStyle())
+             .padding()
+            
+            Button(action: { print("PlainButtonStyle clicked!") })
+            {
+                 Text("PlainButtonStyle")
+            }
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            
+            Button(action: { print("BorderlessButtonStyle clicked!") })
+            {
+                 Text("BorderlessButtonStyle")
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            .padding()
+            
+        }
+    }
+}

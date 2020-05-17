@@ -1,0 +1,32 @@
+struct ContentView: View {
+      var body: some View {
+        VStack {
+            Text("ABCD")
+                .font(.system(size:38, weight:.black))
+            
+            Text("ABCD")
+                .font(.system(size:38, weight:.bold))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.heavy))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.light))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.medium))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.regular))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.semibold))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.thin))
+
+            Text("ABCD")
+                .font(.system(size:38, weight:.ultraLight))
+        }
+    }
+}

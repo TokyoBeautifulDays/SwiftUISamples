@@ -1,0 +1,53 @@
+(1) SwiftUIの画面部品「Toggle」が共有プロパティを書き換えている
+
+
+struct ContentView: View {
+
+    @State private var on = false
+
+    var body: some View {
+
+        VStack {
+
+            Toggle(isOn: $on) {
+                Text("Toggle")
+                .foregroundColor(Color.black)
+            }.padding(100)
+
+
+            if on {
+                Text("Good Morning")
+                .foregroundColor(Color.red)
+            }
+
+        }
+    }
+}
+
+
+(2) Viewモデルが共有プロパティを書き換えている
+
+struct ContentView: View {
+
+    @State private var on = false
+
+    var body: some View {
+
+        VStack {
+
+            Button(action: {
+                self.on.toggle()
+            }) {
+                Text("Toggle Button, tap here")
+                .foregroundColor(Color.black)
+            }
+
+
+            if on {
+                Text("Good Morning")
+                .foregroundColor(Color.red)
+            }
+
+        }
+    }
+}

@@ -1,0 +1,22 @@
+struct ContentView: View {
+
+    var body: some View {
+        VStack {
+            Text("hello world")
+            .padding()
+            .background(Color.yellow)
+            .foregroundColor(Color.white)
+            .font(.largeTitle)
+            .border(Color.green, width: 3)
+            .cornerRadius(5)
+            Divider()
+            Text("good morning")
+            .padding()
+            .background(Color.yellow)
+            .foregroundColor(Color.white)
+            .font(.largeTitle)
+            .border(Color.green, width: 3)
+            .cornerRadius(5)
+        }
+    }
+}

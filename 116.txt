@@ -1,0 +1,31 @@
+// EditButtonオブジェクトを利用
+struct ContentView: View {
+  @State var selection = Set<String>()
+
+   var body: some View {
+         VStack {
+                EditButton().padding()
+                Divider().background(Color.red)
+                List(["A", "B", "C", "D"], id:\.self, selection: $selection) { item in Text(item) }
+         }
+    }
+}
+
+// EditButtonオブジェクトを利用しない
+
+struct ContentView: View {
+         @State var editMode: EditMode = .inactive
+         @State var selection = Set<String>()
+
+         var body: some View {
+            VStack {
+                Button("edit mode button") {
+                    self.editMode 
+                        = self.editMode == EditMode.active ? EditMode.inactive : EditMode.active
+                }.padding()
+                Divider().background(Color.red)
+                List(["A", "B", "C", "D"], id:\.self, selection: $selection) {item in Text(item)
+                }.environment(\.editMode, .constant(self.editMode))
+            }
+        }
+}

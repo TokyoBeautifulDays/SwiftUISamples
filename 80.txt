@@ -1,0 +1,19 @@
+struct ContentView: View {
+    var body: some View {
+      Form {
+  
+            Section(header: Text("Section1"),
+                    footer: Text("footer1") )
+            {
+                  Section(header: Text("Section2"),
+                        footer: Text("footer2") )
+                  {
+                           Text("inside Section 2")
+                  }.offset(x:30)
+                    .foregroundColor(Color.red)
+                
+                  Text("inside Section1")
+           }.foregroundColor(Color.black)
+      }
+   }
+}

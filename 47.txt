@@ -1,0 +1,19 @@
+struct ContentView: View {
+
+    var body: some View {
+
+        VStack(alignment: .center) {
+
+            Text("Hello\nHow are you today?")
+                .multilineTextAlignment(.leading)
+
+            Image("HR20050")
+
+            Image("HY10050")
+
+            Circle().fill(Color.blue).frame(width:50, height:50)
+        }
+        .frame(width:400, height:400, alignment: .center)
+
+    }
+}

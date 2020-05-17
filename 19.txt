@@ -1,0 +1,68 @@
+// sheet
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here")
+
+                     }
+        }.sheet(isPresented: $show){
+                Text("Sheet")
+          }
+    }
+}
+
+// alert
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here")
+
+                     }
+        }.alert(isPresented: $show){
+          Alert(
+              title: Text("Alert Title"),
+              message: Text("Alert message....."),
+              dismissButton: .cancel()
+          )
+        }
+    }
+}
+
+// actionSheet
+
+struct ContentView: View {
+    @State private var show = false
+
+    var body: some View {
+        VStack {
+                Button(action: {
+                          self.show = true
+                 }) {
+                       Text("Click here")
+
+                     }
+        }.actionSheet(isPresented: $show){
+          ActionSheet(
+              title: Text("ActionSheet Title"),
+              message: Text("ActionSheet message....."),
+              buttons: [
+                   .cancel(Text("Cancel...")),
+                   .default(Text("default")),
+                   .destructive(Text("destructive"))
+              ]
+          )
+        }
+    }
+}

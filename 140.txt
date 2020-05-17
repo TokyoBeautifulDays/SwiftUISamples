@@ -1,0 +1,26 @@
+let line = Path { path in
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 100))
+                    path.addLine(to: CGPoint(x: 100, y: 0))
+                    path.addLine(to: CGPoint(x: 0, y: 0))
+            }
+func CGAffineTransformationMix() -> EmptyView {
+     transform = CGAffineTransform(rotationAngle: 30 * CGFloat.pi / 180)
+     transform = transform.concatenating(CGAffineTransform(scaleX: 2.0, y: 0.5) )
+     transform = transform.concatenating(CGAffineTransform(translationX: 50, y: 50))
+     return EmptyView()
+ }
+var transform:CGAffineTransform = CGAffineTransform()
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+            CGAffineTransformationMix()
+            line.applying(transform)
+                .stroke(Color.green,lineWidth:4)
+            
+        }.frame(width:100, height:100)
+  }
+}

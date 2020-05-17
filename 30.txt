@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+            NavigationView {
+                VStack {
+                    Text("Home View").padding()
+                    NavigationLink(destination: SubView1())  { Text("Go to SubView1") }
+                }.navigationBarTitle("Home")
+           }
+    }
+}
+struct SubView1: View {
+    var body: some View {
+        VStack {
+            Text("SubView1").padding()
+            NavigationLink(destination: SubView2()) { Text("Go to SubView2") }
+        }.navigationBarTitle("SubView1")
+    }
+}
+struct SubView2: View {
+    var body: some View {
+            Text("SubView2").padding().navigationBarTitle("SubView2")
+    }
+}

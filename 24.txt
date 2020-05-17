@@ -1,0 +1,29 @@
+struct ContentView: View {
+
+    @State var subview: SubViewPath? = nil
+
+    var body: some View {
+           VStack {
+                   Button("Sheet") { self.subview = SubViewPath(number:0, next:AnyView(SubView1(number:1))) }
+           }.sheet(item: $subview){ $0.next }
+    }
+}
+
+struct SubViewPath: Identifiable {
+    var number:Int
+    var id:Int { return number }
+    var next:AnyView
+}
+
+struct SubView1: View, Identifiable {
+
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var number:Int
+    var id:Int { return number }
+
+    var body: some View {
+              Button("Go Back to Home from SubView.next") {
+                          self.presentationMode.wrappedValue.dismiss()
+              }
+    }
+}

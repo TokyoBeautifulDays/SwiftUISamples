@@ -1,0 +1,21 @@
+struct ContentView: View {
+    var body: some View {
+        
+       Button(action: {  })
+       { Circle().fill(Color.clear) }.buttonStyle(MyButtonStyle())
+        
+    }
+}
+struct MyButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+            configuration.label
+                .overlay( configuration.isPressed ?
+                    Image(systemName:"pencil.circle")
+                       .resizable()
+                       .frame(width: 50.0, height: 50.0):
+                    Image(systemName:"pencil.circle.fill")
+                       .resizable()
+                       .frame(width: 50.0, height: 50.0)
+        )
+    }
+}

@@ -1,0 +1,16 @@
+struct ContentView: View {
+    @State private var input: String = ""
+    var body: some View {
+        VStack {
+// Color
+               TextField("Color", text:self.$input)
+                   .frame(width:200)
+                   .padding(8)
+                   .foregroundColor(Color.white)
+                   .background(
+                       RoundedRectangle(cornerRadius: 4)
+                           .fill(Color.init(white: 0.78))
+                   )
+        }
+    }
+}

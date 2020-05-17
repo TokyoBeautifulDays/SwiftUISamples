@@ -1,0 +1,30 @@
+struct ContentView: View {
+    var body: some View {
+            List {
+                ScrollView(.horizontal ) {
+                    HStack {
+                        Group {
+                            Text("A")
+                            Text("B")
+                            Text("C")
+                            Text("D")
+                            Text("E")
+                            Text("F")
+                            Text("G")
+                            Text("H")
+                            Text("I")
+                            Text("J")
+                        }
+                        Group {
+                            Text("K")
+                            Text("L")
+                            Text("M")
+                            Text("N")
+                            Text("O")
+                            Text("P")
+                        }
+                    }.font(Font.custom("Times", size:32))
+                }
+            }
+    }
+}

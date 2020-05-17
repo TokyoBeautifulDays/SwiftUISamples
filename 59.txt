@@ -1,0 +1,47 @@
+struct MyPreferenceKey: PreferenceKey {
+    typealias Value = [String]
+
+    static var defaultValue: [String] = []
+    static func reduce(value: inout [String], nextValue: () -> [String]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+
+struct ContentView: View {
+    @State var title:String? = nil
+    var body: some View {
+        VStack {
+           Text((title ?? "No Title"))
+                 .underline(true, color:.black)
+                 .bold()
+                 .italic()
+                 .shadow(color: .red, radius: 1, x: 0, y: 2)
+                 .font(Font.custom("Georgia", size:32))
+                 .foregroundColor(.gray)
+           Spacer().frame(height:40)
+           HStack {
+                   Image("purple")
+                    .background(SubView(name:"purple"))
+                    Image("green")
+                        .background(SubView(name:"green"))
+                    Image("red")
+                        .background(SubView(name:"red"))
+            }
+             .onPreferenceChange(MyPreferenceKey.self) { preferences in
+                            self.title = preferences.joined(separator: " ")
+                 }.coordinateSpace(name: "mySpace")
+        }
+    }
+}
+
+struct SubView: View {
+    var name:String
+    var body: some View {
+            Rectangle()
+                .fill(Color.clear)
+                .preference(
+                    key: MyPreferenceKey.self,
+                    value: [self.name]
+                )
+    }
+}

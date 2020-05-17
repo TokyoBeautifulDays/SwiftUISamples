@@ -1,0 +1,29 @@
+extension View {
+    func toAnyView() -> AnyView {
+         AnyView(self)
+    }
+}
+struct ContentView: View {
+     @State var flag = false
+     var body: some View {
+           VStack {
+                  nameView
+                  Toggle (isOn: $flag) {
+                             Text("Show Image")
+                  }
+                  .fixedSize()
+           }
+     }
+     var nameView: some View {
+            if flag {
+                   return Image("red")
+                   .toAnyView()
+
+            }
+            else {
+                   return Text ("Red Rectangle")
+                   .font(.largeTitle)
+                   .toAnyView()
+            }
+     }
+}

@@ -1,0 +1,31 @@
+extension View {
+    func MyCustomStyle() -> some View {
+        modifier(MyTextStyle())
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+               Text("hello world")
+                    .MyCustomStyle()
+            
+               Divider()
+            
+               Text("good morning")
+                    .MyCustomStyle()
+        }
+    }
+}
+
+struct MyTextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .padding()
+        .background(Color.yellow)
+        .foregroundColor(Color.white)
+        .font(.largeTitle)
+        .border(Color.green, width: 3)
+        .cornerRadius(5)
+    }
+}

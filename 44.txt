@@ -1,0 +1,22 @@
+extension View {
+    func Print(_ vars: Any...) -> some View {
+        for v in vars { print(v) }
+        return EmptyView()
+    }
+}
+struct ContentView:View {
+    var body: some View {
+        GeometryReader { geometry in
+            VStack() {
+                Text("size sample")
+                Circle()
+                .fill(Color.blue)
+                .position(x:min(100,geometry.size.width/4) , y:min(200,geometry.size.height/4) )
+                .frame(width: 100, height: 100)
+                #if DEBUG
+                self.Print("Width:", geometry.size.width, "Height:", geometry.size.height)
+                #endif
+            }
+        }
+    }
+}

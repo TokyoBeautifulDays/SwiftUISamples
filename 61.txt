@@ -1,0 +1,68 @@
+struct MyPreference {
+    var topLeading: Anchor<CGPoint>? = nil
+    var bottomTrailing: Anchor<CGPoint>? = nil
+}
+struct MyPreferenceKey: PreferenceKey {
+    typealias Value = [MyPreference]
+    static var defaultValue: [MyPreference] = []
+    static func reduce(value: inout [MyPreference], nextValue: () -> [MyPreference]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+struct ItemView: View {
+    @Binding var active: Int
+    let label: String
+    var body: some View {
+        Text(label)
+            .foregroundColor(.orange)
+            .font(Font.custom("Gothic", size:40))
+            .anchorPreference(key: MyPreferenceKey.self, value: .topLeading, transform: { [MyPreference(topLeading: $0)] })
+            .transformAnchorPreference(key: MyPreferenceKey.self, value: .bottomTrailing, transform:
+                     { ( value: inout [MyPreference], anchor: Anchor<CGPoint>) in
+                        value[0].bottomTrailing = anchor
+                     })
+    }
+}
+struct ContentView : View {
+    @State private var active: Int = 0
+    var body: some View {
+        VStack {
+            HStack {
+                Button(action: { self.active = 0 }){ Text("0").font(Font.custom("Gothic", size:40)) }.padding()
+                Button(action: { self.active = 1 }){ Text("1").font(Font.custom("Gothic", size:40)) }.padding()
+            }
+            HStack {
+                ItemView(active: $active, label: "A").padding()
+                ItemView(active: $active, label: "B").padding()
+            }
+        }
+        .backgroundPreferenceValue(MyPreferenceKey.self) { preferences in
+            return GeometryReader { geometry in
+                     ZStack {
+                        showCircle(active: self.$active, geometry:geometry, preferences:preferences)
+                       }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                  }
+        }
+
+    }
+}
+struct showCircle:View {
+    @Binding var active: Int
+    var geometry:GeometryProxy
+    var preferences:[MyPreference]
+    var body: some View {
+        
+        let preference = preferences[self.active]
+        
+        let tl = (preference.topLeading != nil) ? geometry[preference.topLeading!] : CGPoint.zero
+        let bt = (preference.bottomTrailing != nil) ? geometry[preference.bottomTrailing!] : CGPoint.zero
+        #if DEBUG
+        print("\(tl.x), \(tl.y)   \(bt.x), \(bt.y)")
+        #endif
+        return Circle()
+                   .stroke(lineWidth: 2.0)
+                   .foregroundColor(Color.green)
+                   .frame(width: bt.x - tl.x, height: bt.y - tl.y)
+                   .offset(x: tl.x, y: tl.y)
+    }
+}

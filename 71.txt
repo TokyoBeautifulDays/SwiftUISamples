@@ -1,0 +1,34 @@
+@_functionBuilder
+struct A {
+    static func buildBlock(_ p:String...) -> String { p.joined(separator:" ") }
+    static func buildBlock(_ p:Int...) -> String { String(p.reduce(0,+)) }
+}
+
+// 1. 定義の記述（関数を利用した場合）
+func someMethod<T>( @A closure: () -> T ) -> T  { closure() }
+
+
+// 2. 定義の記述（構造体型を利用した場合）
+
+struct MyStruct {
+    var p:String
+    init( @A closure: @escaping () -> String ) { self.p = closure() }
+}
+
+
+// ユーザプログラムの記述
+
+// 1.の場合
+print(
+       someMethod {
+           "Good Morning"
+       }
+)
+
+
+// 2.の場合
+print( 
+    MyStruct { 
+        "Hello World"
+     }.p
+ )

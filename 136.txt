@@ -1,0 +1,24 @@
+struct Arc: Shape {
+    func path(in rect: CGRect) -> Path {
+        let startAngle:Angle = .degrees(0 - 90)       // 真上を０度とした場合の変換
+        let endAngle:Angle = .degrees(120 - 90)
+        var path = Path()
+        let center = CGPoint(x: rect.width * 0.5, y: rect.height * 0.5)
+        path.move(to:center)
+        path.addArc(center: center,
+                            radius: 100,
+                            startAngle: startAngle,
+                            endAngle: endAngle,
+                            clockwise: true)
+        path.addLine(to:center)
+        return path
+    }
+}
+struct ContentView: View {
+
+  var body: some View {
+        Arc()
+            .foregroundColor(.green)
+            .frame(width: 200, height: 200)
+  }
+}

@@ -1,0 +1,69 @@
+// center
+
+struct ContentView: View {
+   var body: some View {
+        SubView()
+   }
+}
+
+struct SubView: View {
+   var body: some View {
+        Circle()
+            .fill(Color.red)
+            .frame(width:30, height:30)
+   }
+}
+
+// .position(x:0, y:0)
+
+struct ContentView: View {
+   var body: some View {
+        SubView()
+            .position(x:0, y:0)
+   }
+}
+
+struct SubView: View {
+   var body: some View {
+        Circle()
+            .fill(Color.red)
+            .frame(width:30, height:30)
+   }
+}
+
+
+// .position(x:414, y:818)
+
+struct ContentView: View {
+   var body: some View {
+        SubView()
+            .position(x:414, y:818)
+   }
+}
+
+struct SubView: View {
+   var body: some View {
+        Circle()
+            .fill(Color.red)
+            .frame(width:30, height:30)
+   }
+}
+
+// subview .position(x:0, y:0)
+
+struct ContentView: View {
+   var body: some View {
+        SubView()
+            .frame(width:200, height:200)
+            .position(x:200, y:200)
+   }
+}
+
+struct SubView: View {
+   var body: some View {
+        Circle()
+            .fill(Color.red)
+            .frame(width:30, height:30)
+            .position(x:0, y:0)
+   }
+}

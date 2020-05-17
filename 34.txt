@@ -1,0 +1,22 @@
+struct ContentView: View {
+    @State var flag:Bool = false
+    var body: some View {
+        NavigationView {
+                NavigationLink("Push here to SubView", 
+                              destination:SubView(show:self.$flag),
+                               isActive:$flag)
+       }
+    }
+}
+struct SubView:View {
+    @Binding var show:Bool
+    
+     var body: some View {
+        VStack {
+            Text("SubView")
+            Button("Back to main") { self.show = false }
+                .navigationBarBackButtonHidden(true)
+                .padding()
+        }
+     }
+}

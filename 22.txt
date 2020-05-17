@@ -1,0 +1,20 @@
+struct ContentView: View {
+
+    @State var show:Bool = false
+    var body: some View {
+           VStack {
+                         Button("Sheet") { self.show.toggle() }
+            }.sheet(isPresented: self.$show){ SubView() }
+    }
+}
+
+struct SubView: View {
+
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
+    var body: some View {
+               Button("Go Back to Home from SubView1") {
+                              self.presentationMode.wrappedValue.dismiss()
+              }
+    }
+}

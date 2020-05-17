@@ -1,0 +1,27 @@
+// Horizontal Divider
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:10) {
+            Image("yellow")
+            Divider()
+                .frame(height:2)
+                .background(Color.red)
+            Image("green")
+        }
+    }
+}
+
+// Vertical Divider
+
+struct ContentView: View {
+    var body: some View {
+        HStack(spacing:10) {
+            Image("yellow")
+            Divider()
+                .frame(width:2)
+                .background(Color.red)
+            Image("green")
+        }
+    }
+}

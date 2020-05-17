@@ -1,0 +1,70 @@
+struct Curve: Shape {
+    @Binding var control1:CGPoint
+    @Binding var control2:CGPoint
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to:CGPoint(x:0, y:rect.height / 2))
+        path.addCurve(to: CGPoint(x:rect.width, y:rect.height / 2),
+                      control1:CGPoint(x:control1.x, y:control1.y),
+                      control2:CGPoint(x:control2.x, y:control2.y))
+        return path
+    }
+}
+struct MyText: View {
+    var text:String
+    var color:Color
+    var size:CGFloat
+    let point:CGPoint
+    var body: some View {
+        Text(text)
+            .position(x:point.x, y:point.y)
+            .font(Font.custom("Georgia", size:size))
+            .foregroundColor(color)
+    }
+}
+struct MyCurve: View {
+    @Binding var control1:CGPoint
+    @Binding var control2:CGPoint
+    var body: some View {
+        Curve(control1:$control1, control2:$control2)
+               .stroke(Color.green,lineWidth: 5)
+               .border(Color.gray)
+    }
+}
+struct ContentView: View {
+    let size:CGSize = CGSize(width:200, height:200)
+    @State var control1:CGPoint = CGPoint(x:100, y:100)
+    @State var control2:CGPoint = CGPoint(x:100, y:100)
+    var body: some View {
+        VStack(spacing:100) {
+            MyCurve(control1:$control1, control2:$control2)
+                .overlay( MyText(text:"2", color:.black, size:20.0, point:control2) )
+                .overlay( MyText(text:"1", color:.red, size:20.0, point:control1) )
+                .frame(width: size.width, height: size.height)
+            
+            
+            Form {
+               HStack {
+                   Text("C1 x=\(String(format: "%.2f", control1.x))")
+                   Slider(value: $control1.x, in: -size.width/2...size.width * 1.5, step:10.0)
+               }
+               HStack {
+                   Text("C1 y=\(String(format: "%.2f", control1.y))")
+                   Slider(value: $control1.y, in: -size.height/2...size.height * 1.5, step:10.0)
+               }
+                HStack {
+                    Text("C2 x=\(String(format: "%.2f", control2.x))")
+                    Slider(value: $control2.x, in: -size.width/2...size.width * 1.5, step:10.0)
+                }
+                HStack {
+                    Text("C2 y=\(String(format: "%.2f", control2.y))")
+                    Slider(value: $control2.y, in: -size.height/2...size.height * 1.5, step:10.0)
+                }
+                Button("Reset") {
+                    self.control1 = CGPoint(x:100, y:100)
+                    self.control2 = CGPoint(x:100, y:100)
+                }
+            }.frame(height:300)
+        }
+  }
+}

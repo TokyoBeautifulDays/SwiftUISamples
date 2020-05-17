@@ -1,0 +1,68 @@
+protocol MyProtocol {
+    var string:String { get set }
+}
+struct MyString:View, MyProtocol {
+    var string:String
+    init(_ string:String) {
+        self.string = string
+    }
+    var body: some View {
+        return EmptyView()
+    }
+}
+struct CardStyle<Content: View> : View
+{
+    var content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .padding()
+            .background(Color.white)
+            .cornerRadius(8)
+            .shadow(radius: 10)
+    }
+}
+struct NameStyle<T:MyProtocol>: View
+{
+    var mark:String
+    var name:String
+
+    init(@ViewBuilder content: () -> TupleView<(T, T)>) {
+
+        let content = content().value
+        self.mark = content.0.string
+        self.name = content.1.string
+    }
+
+    var body: some View {
+        HStack {
+            Image(systemName:mark)
+              .foregroundColor(.red)
+              .imageScale(.large)
+            Text(name)
+              .font(Font.custom("Times", size:CGFloat(28)))
+        }
+    }
+}
+struct ContentView : View {
+    var body: some View {
+        VStack {
+            CardStyle {
+                  NameStyle {
+                      MyString("star.fill")
+                      MyString("Hello, Mr.Yamada")
+                  }
+            }
+            CardStyle {
+                 NameStyle {
+                       MyString("heart.fill")
+                       MyString("Hello, Mr.Suzuki")
+                }
+            }
+        }
+    }
+}

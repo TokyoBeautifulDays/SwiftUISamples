@@ -1,0 +1,40 @@
+struct ContentView: View {
+    
+    var body: some View {
+        TupleView(
+            Text("Hello")
+        )
+    }
+}
+
+
+struct ContentView: View {
+    
+    var body: some View {
+
+        TupleView((
+            Text("Hello"),
+            Image("red"),
+            Circle().fill(Color.green).frame(width:100, height:100)
+        ))
+
+    }
+}
+
+
+struct ContentView: View {
+    
+    var body: some View {
+
+        HStack {
+
+           TupleView((
+               Text("Hello"),
+               Image("red"),
+               Circle().fill(Color.green).frame(width:100, height:100)
+           ))
+
+        }
+
+    }
+}

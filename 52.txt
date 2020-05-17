@@ -1,0 +1,23 @@
+struct ContentView: View {
+    @State var alignment:VerticalAlignment = .firstTextBaseline
+    var body: some View {
+        VStack {
+           Spacer()
+           HStack(alignment: alignment, spacing:35) {
+                   Text("Hello\nHello")
+                        .font(Font.custom("Gothic", size:40))
+                        .foregroundColor(.green)
+                        .alignmentGuide(.firstTextBaseline) { d in d.height }
+                        .alignmentGuide(.lastTextBaseline) { d in -d.height/2.0 }
+                    Text("Good Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning\nGood Morning")
+                        .alignmentGuide(.firstTextBaseline) { d in -d.height/3.0 }
+                        .alignmentGuide(.lastTextBaseline) { d in d.height/3.0 }
+                    Image("red")
+            }
+            Spacer()
+            Button("firstTextBaseline") { self.alignment = .firstTextBaseline }
+            Button("lastTextBaseline") { self.alignment = .lastTextBaseline }
+            Spacer()
+        }
+    }
+}

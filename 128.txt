@@ -1,0 +1,14 @@
+struct ContentView: View {
+    @State private var now: Double = 50
+    
+    var body: some View {
+        
+        VStack {
+          Text("\(Int(now))%")
+          Slider(value: $now,
+                 in: 0...100,
+                 step:1.0)
+        }.frame(width:350)
+        
+    }
+}

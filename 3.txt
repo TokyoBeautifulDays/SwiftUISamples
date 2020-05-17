@@ -1,0 +1,17 @@
+// Parent View
+
+struct ContentView: View {
+   var body: some View {
+        SubView(myImage:"red")
+   }
+}
+
+
+// Sub View
+
+struct SubView: View {
+   var myImage:String
+   var body: some View {
+        Image(myImage)
+   }
+}

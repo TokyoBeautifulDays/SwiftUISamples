@@ -1,0 +1,27 @@
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:0) {
+            Text("head").zIndex(1)
+            Image("red")
+                 .background(Color.green)
+                 .border(Color.yellow, width:4)
+                 .frame(width:150, height:150)
+                 .padding(.top, 50)
+        }
+    }
+}
+
+---
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing:0) {
+            Text("head").zIndex(1)
+            Image("red")
+                 .padding(.top, 50)
+                 .background(Color.green)
+                 .border(Color.yellow, width:4)
+                 .frame(width:150, height:150)
+        }
+    }
+}

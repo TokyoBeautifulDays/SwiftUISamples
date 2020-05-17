@@ -1,0 +1,55 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image("yellow")
+            Image("green")
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image("yellow")
+            Image("green")
+            Spacer()
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("yellow")
+            Image("green")
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("yellow")
+            Spacer()
+            Image("green")
+            Spacer()
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("yellow")
+            Spacer()
+            Image("green")
+            Spacer()
+            Spacer()
+            Spacer()
+            
+        }
+    }
+}

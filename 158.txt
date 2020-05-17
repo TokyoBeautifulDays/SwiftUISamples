@@ -1,0 +1,81 @@
+extension Color {
+    public init(red: Int, green: Int, blue: Int) {
+        self = Color(red: Double(red)/255.0,
+                     green: Double(green)/255.0,
+                     blue: Double(blue)/255.0)
+    }
+}
+extension View {
+    func makeCardStyle() -> some View {
+        self
+           .padding()
+           .background(Color(red:120, green:150, blue:200))
+           .cornerRadius(8)
+           .shadow(radius: 4, x: 10, y: 15)
+    }
+}
+struct ContentView: View {
+    @State var selection:Int = 0
+    @State var on = false
+   
+    var body: some View {
+        VStack {
+            ShowPicker(selection:self.$selection,
+                       pickerName: "Transition Option",
+                items:["identity", "slide", "opacity", "scale", "move", "offset"],
+                style:SegmentedPickerStyle()).padding(20)
+            Button(action: { withAnimation { self.on.toggle() } })
+                { on ? Text("Back") : Text("SubView") }
+                  .animation(nil)
+                  .frame(width:250)
+                  .foregroundColor(Color(red:100, green:180, blue:240))
+                  .font(.system(size:24, weight:.bold))
+
+            Spacer()
+            if on { TransitionChoice(selection: self.selection) }
+            Spacer()
+            Spacer()
+            Spacer()
+        }
+    }
+}
+struct TransitionChoice: View {
+    var selection:Int
+    var body: some View {
+        switch self.selection {
+               case 0: return AnyView(SubView1(message:"0").transition(.identity).makeCardStyle())
+               case 1: return AnyView(SubView1(message:"1").transition(.slide).makeCardStyle())
+               case 2: return AnyView(SubView1(message:"2").transition(.opacity).makeCardStyle())
+               case 3: return AnyView(SubView1(message:"3").transition(.scale).makeCardStyle())
+               case 4: return AnyView(SubView1(message:"4").transition(.move(edge: .leading)).makeCardStyle())
+               case 5: return AnyView(SubView1(message:"5").transition(.offset(x:100, y:100)).makeCardStyle())
+               default: return AnyView(EmptyView())
+        }
+    }
+}
+struct SubView1: View {
+    var message: String
+    var body: some View {
+          Text("SubView " + message)
+            .font(.system(size:32, weight:.bold))
+    }
+}
+struct ShowPicker<S : PickerStyle> : View {
+    
+    @Binding var selection:Int
+    let pickerName:String
+    let items:[String]
+    let style:S     // SegmentedPickerStyle() or WheelPickerStyle()
+    
+    var body: some View {
+        VStack(alignment:.center) {
+            Text(pickerName).font(.system(size:20, weight:.bold))
+            Picker(selection: self.$selection, label:
+                  EmptyView()) {
+                         ForEach(0 ..< items.count) { index in
+                               Text(self.items[index]).tag(index)
+                         }
+            }.pickerStyle(style)
+        }
+    }
+}

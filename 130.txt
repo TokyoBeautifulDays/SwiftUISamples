@@ -1,0 +1,11 @@
+struct ContentView: View {
+    var body: some View {
+        ScrollView([.vertical, .horizontal],showsIndicators: false) {
+            
+            Image(systemName: "star.fill")
+                .foregroundColor(.red)
+                .font(.system(size:50))
+            }
+
+    }
+}

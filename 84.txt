@@ -1,0 +1,65 @@
+struct ContentView: View {
+    @State var tab = 1
+    enum TabSelection:Int, CaseIterable, Hashable, Identifiable{
+        case First = 1
+        case Second
+        case Third
+        
+        var id: TabSelection {self}
+        var name: String {
+            return "\(self)".map {
+                $0.isUppercase ? " \($0)" : "\($0)" }.joined().capitalized
+        }
+    }
+    var body: some View {
+        VStack {
+               Spacer()
+               Text("Please select Tab")
+               Picker("", selection:self.$tab)
+               {
+                      ForEach(TabSelection.allCases, id: \.self) { mode in
+                        Text(mode.name).tag(mode.rawValue)
+                           
+                      }
+               }
+               .pickerStyle(SegmentedPickerStyle())
+               .padding(.horizontal)
+               .frame(height:100)
+                Text("Selected Tab: \(tab)")
+                Divider()
+                MyTabPage(tab:self.$tab)
+        }.font(Font.custom("Times", size:26))
+    }
+}
+struct MyTabPage: View {
+    @Binding var tab:Int   // active tab selection
+    var body: some View {
+
+        TabView(selection: self.$tab) {
+               VStack {
+                Text("First")
+               }
+                .tabItem {
+                    Image(systemName: "1.square.fill")
+                    Text("First")
+                }.tag(1)
+            
+                VStack {
+                    Text("Second")
+                }
+                .tabItem {
+                    Image(systemName: "2.square.fill")
+                    Text("Second")
+                }.tag(2)
+            
+                VStack {
+                    Text("Third")
+                }
+                .tabItem {
+                    Image(systemName: "3.square.fill")
+                    Text("Third")
+                }.tag(3)
+        }
+        .font(Font.custom("Times", size:32))
+    }
+}

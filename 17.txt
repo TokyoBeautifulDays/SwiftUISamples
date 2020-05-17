@@ -1,0 +1,51 @@
+class A: ObservableObject {
+    @Published var property1:Int = 0
+    @Published var flag:Bool = false
+               var property2:String = "Hello"
+}
+
+struct ContentView: View {
+    @ObservedObject var a = A()
+    var body: some View {
+              VStack {
+                   SubView1(a:a)
+                    .position(x:200, y:300)
+                   if a.flag {
+                         VStack {
+                               SubView2(a:a)
+                               Spacer()
+                          }
+                       }
+               }
+    }
+}
+
+struct SubView1:View {
+      @ObservedObject var a:A
+      var body: some View {
+          VStack {
+                    Text("property1 = \(a.property1)").padding()
+                    Button(action: {
+                        self.a.property1 +=  1
+                    }) {
+                        Text("Clik here to add 1")
+                             .foregroundColor(Color.white)
+                             .background(Color.green)
+                    }
+                    Toggle(isOn: $a.flag) {
+                               Text("Toggle to show SubView")
+                                 .foregroundColor(Color.black)
+                    }.frame(width:250)
+            }
+      }
+}
+
+struct SubView2:View {
+      @ObservedObject var a:A
+      var body: some View {
+                VStack {
+                      Text("SubView")
+                      Text("property1 = \(a.property1)")
+                }
+      }
+}

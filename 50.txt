@@ -1,0 +1,11 @@
+struct ContentView: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Image("HR20050")
+                .alignmentGuide(.leading) { d in d.width/4.0 }
+            Image("HY10050")
+                .alignmentGuide(.leading) { viewDimensions in viewDimensions[.leading] + ( viewDimensions[.trailing] - viewDimensions[.leading]) / 2.0 }
+            Image("HG5050")
+        }
+    }
+}

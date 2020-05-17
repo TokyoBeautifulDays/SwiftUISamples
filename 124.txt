@@ -1,0 +1,37 @@
+enum Items:String,CaseIterable{
+
+        case a = "A"
+        case b = "B"
+        case c = "C"
+    
+    static var values: [String] { return  Items.allCases.map { $0.rawValue } }
+}
+struct ContentView: View {
+   @State var selection = 0
+   var body: some View {
+       NavigationView {
+           Form {
+               Section(header: Text("Setting")) {
+                    Text(Items.values[self.selection])
+                    ShowPickerinForm(selection: self.$selection,
+                                     pickerName:"MyPicker",
+                                     items:Items.values)
+                }
+           }.navigationBarTitle("Select")
+      }
+   }
+}
+struct ShowPickerinForm : View {
+    
+    @Binding var selection:Int
+    let pickerName:String
+    let items:[String]
+    
+    var body: some View {
+            Picker(selection: $selection, label:
+                 Text(pickerName))
+            {
+              ForEach(0 ..< items.count) { index in Text(self.items[index]).tag(index) }
+            }
+    }
+}

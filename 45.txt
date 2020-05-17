@@ -1,0 +1,44 @@
+extension View {
+    func Print(_ vars: Any...) -> some View {
+        for v in vars { print(v) }
+        return EmptyView()
+    }
+}
+struct ContentView:View {
+    var body: some View {
+            ZStack {
+              GeometryReader { geometry in
+                Circle().foregroundColor(Color.yellow)
+                    .frame(width:100, height:100)
+                    .overlay(ShowGeometryProxy(proxy:geometry))
+                    .background(SubView())
+              }
+                Circle().frame(width:10, height:10).foregroundColor(.red).position(x:157, y:(403-44))
+            }
+    }
+}
+struct SubView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            #if DEBUG
+            self.Print("SubView")
+            #endif
+            ShowGeometryProxy(proxy:geometry)
+        }
+    }
+}
+
+struct ShowGeometryProxy:View {
+    var proxy:GeometryProxy
+    var body: some View {
+        VStack {
+        #if DEBUG
+        // choose "Debug preview"
+          Print("safe area", proxy.safeAreaInsets.top, proxy.safeAreaInsets.bottom, proxy.safeAreaInsets.leading, proxy.safeAreaInsets.trailing)
+          Print("Size", proxy.size.width, proxy.size.height)
+          Print("Rect", proxy.frame(in: .global).origin.x,proxy.frame(in: .global).origin.y, proxy.frame(in: .global).size.width, proxy.frame(in: .global).size.height )
+          Print("Center", proxy.frame(in: .global).midX, proxy.frame(in: .global).midY)
+        #endif
+        }
+    }
+}

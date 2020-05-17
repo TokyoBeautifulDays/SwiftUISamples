@@ -1,0 +1,23 @@
+struct ContentView: View {
+
+    @State var subview: SubView? = nil
+
+    var body: some View {
+              VStack {
+                               Button("Sheet") { self.subview = SubView(number:0) }
+              }.sheet(item: $subview){ $0 }
+    }
+}
+
+struct SubView: View, Identifiable {
+
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var number:Int
+    var id:Int { return number }
+
+    var body: some View {
+              Button("Go Back to Home from SubView1") {
+                                     self.presentationMode.wrappedValue.dismiss()
+              }
+    }
+}

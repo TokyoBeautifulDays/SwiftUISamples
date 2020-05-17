@@ -1,0 +1,36 @@
+struct ContentView: View {
+    @State var show = false
+    var body: some View {
+        NavigationView {
+           VStack {
+            Divider().frame(height:2).foregroundColor(Color.red).background(Color.red)
+            Text("Home View").padding()
+            NavigationLink(destination: SubView1(show:self.$show), isActive:self.$show)  { EmptyView() }
+            Spacer()
+           }.navigationBarTitle("Title HomeView")
+            .navigationBarItems(leading:
+                VStack {
+                    Image(systemName: "heart.fill").foregroundColor(.red)
+                    Button(action: {self.show = true}, label: {Text("to SubView1")})
+                }
+            )
+        }
+    }
+}
+struct SubView1: View {
+    @Binding var show:Bool
+    var body: some View {
+        VStack {
+            Divider().frame(height:2).foregroundColor(Color.red).background(Color.red)
+            Text("SubView1").padding()
+            Spacer()
+        }.navigationBarTitle("Title SubView1")
+        .navigationBarItems(trailing:
+            HStack {
+                Image(systemName: "star.fill").foregroundColor(.blue)
+                Button(action: {self.show = false}, label: {Text("back to Home")})
+            }
+        )
+        .navigationBarBackButtonHidden(true)
+    }
+}

@@ -1,0 +1,84 @@
+import CoreData
+
+let names = ["Kato", "Fujita", "Aoki", "Mori", "Sugita", "Gotoh", "Hoshino", "Tanaka", "Endoh", "Ishii", "Doi"]
+
+struct ContentView: View {
+    @Environment(\.managedObjectContext) var context: NSManagedObjectContext
+    @FetchRequest(
+             entity: MyEntity.entity(),
+             sortDescriptors: [],
+             animation: nil)
+             var items0: FetchedResults<MyEntity>
+    @FetchRequest(
+        entity: MyEntity.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \MyEntity.name, ascending: true)],
+        animation: nil) var items1: FetchedResults<MyEntity>
+    
+    @FetchRequest(
+        entity: MyEntity.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \MyEntity.age, ascending: true)],
+        animation: nil) var items2: FetchedResults<MyEntity>
+    
+    @FetchRequest(
+        entity: MyEntity.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \MyEntity.star, ascending: false)],
+        animation: nil) var items3: FetchedResults<MyEntity>
+
+    @State var show = false
+    @State var pickerIndex = 0
+
+    var body: some View {
+        VStack {
+            ShowPicker(selection:self.$pickerIndex, pickerName:"Sort", items:["no", "name", "age", "star"], style:SegmentedPickerStyle())
+            Spacer()
+            Button("Add User") {
+                 let random = Int.random(in: 0..<11)
+                 let entity = MyEntity(context:self.context)
+                     entity.name = names[random]
+                     entity.age = Int16.random(in: 0..<60)
+                     entity.star = Bool.random()
+            }.padding(20)
+            
+            ForEach(sortChoice(), id:\.self) { entity in
+                    HStack {
+                          if entity.name != nil {
+                                Text(entity.name!)
+                                Text(String(entity.age))
+                                 entity.star ? Image(systemName: "star.fill").foregroundColor(Color.red)
+                                             : Image(systemName: "star.fill").foregroundColor(Color.gray)
+                          }
+                          else { Text("No items") }
+                    }
+            }
+            Spacer()
+        }
+    }
+    func sortChoice() -> FetchedResults<MyEntity> {
+           switch self.pickerIndex {
+              case 0: return items0
+              case 1: return items1
+              case 2: return items2
+              case 3: return items3
+              default: return items0
+            }
+    }
+}
+struct ShowPicker<S : PickerStyle> : View {
+    
+    @Binding var selection:Int
+    let pickerName:String
+    let items:[String]
+    let style:S     // SegmentedPickerStyle() or WheelPickerStyle()
+    
+    var body: some View {
+        VStack(alignment:.center) {
+            Text(pickerName)
+            Picker(selection: $selection, label:
+                  EmptyView()) {
+                         ForEach(0 ..< items.count) { index in
+                               Text(self.items[index]).tag(index)
+                         }
+            }.pickerStyle(style)
+        }
+    }
+}

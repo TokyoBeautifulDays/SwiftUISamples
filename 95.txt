@@ -1,0 +1,23 @@
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+// 文字の色、背景色の指定
+            Text("Hello World")
+                .font(.largeTitle)
+                .foregroundColor(Color.white)
+                .background(Color.red)
+            
+// UIColorを指定
+            Text("Hello World")
+                .font(.largeTitle)
+                .foregroundColor(Color(UIColor.systemIndigo))
+            
+ // custom Font種、サイズを指定
+            Text("Hello World")
+                .font(.custom("Georgia", size:38))
+                .foregroundColor(Color.gray)
+        }
+        
+    }
+}
