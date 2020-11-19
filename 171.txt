@@ -1,0 +1,77 @@
+
+// LazyVGrid
+
+struct ContentView: View {
+    let items = 1...30
+
+    // ここを(1), (2), (3)と入れ替えます
+
+    private let columns: [GridItem] = [
+            GridItem(.adaptive(minimum: 80))
+    ]
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, alignment:.center, spacing:20) {
+                ForEach(items, id: \.self) { item in
+                    Text("Item \(item)")
+                }
+            }
+        }.frame(width:300, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}
+
+
+// (1)
+
+private let columns: [GridItem] = [
+        GridItem(.adaptive(minimum: 80))
+]
+
+// (2) 
+
+private let columns: [GridItem] = [
+    GridItem(.fixed(50)),
+    GridItem(.fixed(75)),
+    GridItem(.fixed(100))
+]
+
+
+// (3)
+
+
+private let columns: [GridItem] = [
+    GridItem(.flexible()),
+    GridItem(.flexible()),
+    GridItem(.flexible())
+]
+
+
+// LazyHGrid
+
+
+private let rows: [GridItem] = [
+        GridItem(.adaptive(minimum: 80))
+]
+
+
+struct ContentView: View {
+    let items = 1...30
+    private let rows: [GridItem] = [
+            GridItem(.adaptive(minimum: 80))
+    ]
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: rows, alignment:.center, spacing:20) {
+                ForEach(items, id: \.self) { item in
+                    Text("Item \(item)")
+                }
+            }
+        }.frame(width:300, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}
+
+
+

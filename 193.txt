@@ -1,0 +1,31 @@
+struct ContentView: View {
+    @Environment(\.sizeCategory) var sizeCategory
+    @ScaledMetric var imageSize: CGFloat = 100
+
+    var body: some View {
+        VStack {
+            Text(showSizeCategory(sizeCategory)).font(.title)
+            Image(systemName: "trash.fill")
+                .resizable()
+                .frame(width: imageSize, height: imageSize)
+        }
+    }
+}
+
+func showSizeCategory(_ sizeCategory:ContentSizeCategory) -> String {
+    switch sizeCategory {
+    case .accessibilityExtraExtraExtraLarge: return "accessibilityXXXL"
+    case .accessibilityExtraExtraLarge:return "accessibilityXXL"
+    case .accessibilityExtraLarge: return "accessibilityXL"
+    case .accessibilityLarge: return "accessibilityLarge"
+    case .accessibilityMedium: return "accessibilityMedium"
+    case .extraExtraExtraLarge: return "XXXL"
+    case .extraExtraLarge: return "XXL"
+    case .extraLarge: return "XL"
+    case .extraSmall: return "extraSmall"
+    case .large: return "large"
+    case .medium: return "medium"
+    case .small: return "small"
+    default: return "No Category"
+    }
+}

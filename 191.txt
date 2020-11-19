@@ -1,0 +1,25 @@
+struct ContentView: View {
+    var body: some View {
+        Dialog()
+            .frame(width:300, height:150)
+            .position(x:200, y:300)
+    }
+}
+struct Dialog: View {
+    
+    @AppStorage("username") var username: String = "no name"
+    //@AppStorage("username", store: UserDefaults(suiteName: "group.com.test.id")) var username: String = "no name"
+    //@SceneStorage("username") var username: String = "no name"
+    
+    @State var name:String = ""
+    var body: some View {
+        VStack {
+            Text("Welcome,\(username) !").font(.system(size: 20)).fontWeight(.black)
+            HStack {
+                Text("Your name:")
+                TextField("Type your name", text:self.$name,onCommit: { username = name })
+                    .border(Color.gray, width:2)
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+struct ContentView: View {
+    @State private var fgColor = Color.red
+    @State private var bgColor = Color.white
+    
+    let messageText = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    
+    func showString(_ str:String, start:Int, end:Int) -> String {
+        String(str[ str.index(str.startIndex, offsetBy: start) ..< str.index(str.startIndex, offsetBy: end ) ])
+    }
+
+    var body: some View {
+        VStack {
+            Text("Color Picker subString Test")
+                .background(bgColor)
+                .font(.system(size: 20, weight: .black, design: .rounded))
+            
+                ColorPicker(showString(messageText,start: 0, end:10), selection: $bgColor).frame(width: 200)
+            
+        }.frame(width: 300, height: 200)
+         .border(Color.gray)
+    }
+}

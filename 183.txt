@@ -1,0 +1,9 @@
+struct ContentView: View {
+    var body: some View {
+        NavigationView {
+            Text("Hello, World!").padding()
+                .navigationTitle("SwiftUI")
+                .toolbar { Button(action: {}){ Label("B1", systemImage: "circle")} }
+        }
+    }
+}

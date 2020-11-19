@@ -1,0 +1,14 @@
+struct ContentView: View {
+    var body: some View {
+        showTextEditor()
+    }
+}
+struct showTextEditor: View {
+    @State private var input: String = "write here..."
+    var body: some View {
+               TextEditor(text:self.$input)
+                .foregroundColor(Color.red)
+                .border(Color.gray, width: 1)
+                .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height/5)
+    }
+}

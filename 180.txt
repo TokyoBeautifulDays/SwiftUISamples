@@ -1,0 +1,18 @@
+struct ContentView: View {
+    @State private var fgColor = Color.red
+    @State private var bgColor = Color.white
+
+    var body: some View {
+        VStack {
+            Text("Color Picker Test")
+                .foregroundColor(fgColor)
+                .background(bgColor)
+                .font(.system(size: 26, weight: .black, design: .rounded))
+            Group {
+                ColorPicker("Foreground color", selection: $fgColor)
+                ColorPicker("Background color", selection: $bgColor)
+            }.frame(width: 200)
+        }.frame(width: 300, height: 200)
+         .border(Color.gray)
+    }
+}

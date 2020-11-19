@@ -1,0 +1,68 @@
+@main
+struct SampleApp: App {
+    @StateObject var counter = Counter()
+    var body: some Scene {
+        WindowGroup {
+            ContentView().environmentObject(counter)
+        }
+    }
+}
+
+final class Counter: ObservableObject {
+    @Published var count: Int = 0
+}
+struct ContentView: View {
+    @State var count: Int = 0
+    var body: some View {
+        VStack (alignment:.leading,spacing:20){
+            HStack {
+                Button("Push to add") { count += 1 }
+                Text("Parent View:   \(self.count)")
+            }
+            ChildViewForState()
+            ChildViewForStateObject()
+            ChildViewForObservedObject()
+            ChildViewForEnvironmentObject()
+        }
+    }
+}
+struct ChildViewForState: View {
+    @State var count = 0
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { count += 1 }
+            Text("Child View(State):   \(self.count)")
+        }
+    }
+}
+struct ChildViewForStateObject: View {
+    @StateObject var counter = Counter()
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(StateObject):   \(self.counter.count)")
+        }
+    }
+}
+struct ChildViewForObservedObject: View {
+    @ObservedObject var counter = Counter()
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(ObservedObject):   \(self.counter.count)")
+        }
+    }
+}
+struct ChildViewForEnvironmentObject: View {
+    @EnvironmentObject var counter:Counter
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(EnvironmentObject):   \(self.counter.count)")
+        }
+    }
+}

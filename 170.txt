@@ -1,0 +1,46 @@
+struct ContentView: View {
+    @State private var prompt = "write here..."
+    @State private var input: String = ""
+    var body: some View {
+        VStack {
+            showText(input: self.$input, prompt: self.$prompt).frame(width:300, height:30)
+            showTextEditor(input: self.$input, prompt: self.$prompt).frame(width:300, height:150)
+        }
+    }
+}
+struct showTextEditor: View {
+    @Binding var input: String
+    @Binding var prompt: String
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+             TextEditor(text:self.$input)
+                  .foregroundColor(Color.red)
+                  .border(Color.gray, width: 1)
+                  .onTapGesture { if input.isEmpty { prompt = "" } }
+                  .onChange(of: input) { _ in
+                         if input.isEmpty { prompt = "write here..." }
+                            else { prompt = "" }
+                   }
+            Text(prompt)
+                  .foregroundColor(Color.red)
+                  .padding()
+                  .foregroundColor(.gray)
+                  .offset(x:-10,y:-10)
+        }
+    }
+}
+struct showText: View {
+    @Binding var input: String
+    @Binding var prompt: String
+    var body: some View {
+        VStack {
+            Rectangle()
+                .stroke(Color.gray, lineWidth:1)
+                .background(
+                    Group {
+                         input.isEmpty == true ? AnyView(Text(prompt)) : AnyView(Text(input))
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading).offset(x:5)
+                )
+         }
+    }
+}

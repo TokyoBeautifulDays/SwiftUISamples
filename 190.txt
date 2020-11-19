@@ -1,0 +1,96 @@
+struct TextStyle: ViewModifier {
+    let color: Color
+    func body(content: Content) -> some View {
+        content
+            .font(Font.largeTitle.weight(.bold))
+            .foregroundColor(Color.white)
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(color)
+    }
+}
+struct ContentView: View {
+    var body: some View {
+        NavigationView {
+            SidebarView()       // delete this line if you choose Master-Detail navigation
+            MasterView()
+            OpeningView()
+        }
+    }
+}
+struct OpeningView: View {
+    var body: some View {
+        Text("Welcome to App").modifier(TextStyle(color:Color.green))
+                              .navigationBarTitle(Text("Some app"))
+    }
+}
+struct SidebarView: View {
+    var body: some View {
+        List {
+            NavigationLink(destination: MasterView()){ Text("Menu Group-A") }
+            NavigationLink(destination: MasterView2()){ Text("Menu Group-B") }
+            Text("Menu Group-C")
+            Text("Menu Group-D")
+        }.listStyle(SidebarListStyle())
+         .navigationTitle("Sidebar")
+    }
+}
+struct MasterView: View {
+    var body: some View {
+        List {
+            NavigationLink(destination: Menu1View()){ Text("Menu1") }
+            NavigationLink(destination: Menu2View()){ Text("Menu2") }
+            NavigationLink(destination: Menu3View()){ Text("Menu3") }
+        }.navigationTitle("Master")
+    }
+}
+struct MasterView2: View {
+    var body: some View {
+        List {
+            Text("Menu4")
+            Text("Menu5")
+            Text("Menu6")
+        }.navigationTitle("Master")
+    }
+}
+struct Menu1View: View {
+   var body: some View {
+        List {
+            Group {
+                NavigationLink(destination: DetailView2(message:"Menu1-1")){ Text("Menu1-1")}
+                NavigationLink(destination: DetailView(message:"Menu1-2")){ Text("Menu1-2")}
+                NavigationLink(destination: DetailView(message:"Menu1-3")){ Text("Menu1-3")}
+            }.foregroundColor(Color.white)
+            .font(Font.headline.weight(.black))
+             .listRowBackground(Color.green)
+     }.navigationTitle("Menu1")
+   }
+}
+struct Menu2View: View {
+   var body: some View {
+        Text("Menu2").modifier(TextStyle(color:Color.blue))
+            .navigationBarTitle(Text("Menu2"))
+   }
+}
+struct Menu3View: View {
+   var body: some View {
+        Text("Menu3").modifier(TextStyle(color:Color.red))
+            .navigationBarTitle(Text("Menu3"))
+   }
+}
+struct DetailView: View {
+    var message:String
+   var body: some View {
+        Text("Called by \n" + message).modifier(TextStyle(color:Color.gray))
+            .navigationBarTitle(Text("Detail " + message))
+   }
+}
+struct DetailView2: View {
+    var message:String
+   var body: some View {
+        NavigationLink(destination:Text("Called by \n" + message).modifier(TextStyle(color:Color.gray))
+                        .navigationBarTitle(Text("Detail Menu1-1-1")))
+            { Text("Menu1-1-1").modifier(TextStyle(color:Color.yellow)) }
+            .navigationBarTitle(Text("Detail " + message))
+   }
+}

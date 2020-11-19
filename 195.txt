@@ -1,0 +1,31 @@
+struct ContentView: View {
+    @Environment(\.sizeCategory) var sizeCategory
+    @ScaledMetric(relativeTo: .body) var spacing: CGFloat = 8
+
+    var body: some View {
+        VStack {
+            Text(showSizeCategory(sizeCategory))
+            HStack(spacing: spacing) {
+                ForEach(0...5, id: \.self) { number in Text(String(number)) }
+            }
+        }
+    }
+}
+
+func showSizeCategory(_ sizeCategory:ContentSizeCategory) -> String {
+    switch sizeCategory {
+    case .accessibilityExtraExtraExtraLarge: return "accessibilityXXXL"
+    case .accessibilityExtraExtraLarge:return "accessibilityXXL"
+    case .accessibilityExtraLarge: return "accessibilityXL"
+    case .accessibilityLarge: return "accessibilityLarge"
+    case .accessibilityMedium: return "accessibilityMedium"
+    case .extraExtraExtraLarge: return "XXXL"
+    case .extraExtraLarge: return "XXL"
+    case .extraLarge: return "XL"
+    case .extraSmall: return "extraSmall"
+    case .large: return "large"
+    case .medium: return "medium"
+    case .small: return "small"
+    default: return "No Category"
+    }
+}

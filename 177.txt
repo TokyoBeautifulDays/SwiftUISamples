@@ -1,0 +1,85 @@
+import UniformTypeIdentifiers
+
+@main
+struct MyTextApp: App {
+    var body: some Scene {
+        DocumentGroup(newDocument: { MyTextDocument()}) { file in
+            ContentView(document: file.document)
+        }
+    }
+}
+struct ContentView: View {
+    @ObservedObject var document:MyTextDocument
+    var body: some View {
+          VStack {
+            showSwitch(flag:self.$document.flag).position(x:200, y:300)
+            if document.flag { showTextEditor(text:$document.text).position(x:200, y:60) }
+            }
+    }
+}
+final class MyTextDocument: ReferenceFileDocument {
+    
+    @Published var text:String = "Hello World!!"
+    @Published var flag:Bool = false
+    
+    typealias Snapshot = String
+    static var readableContentTypes = [UTType.plainText]
+    init() {
+        self.text = "Hello World"
+    }
+    init(configuration: ReadConfiguration) throws {
+              guard let data = configuration.file.regularFileContents,
+                        let string = String(data: data, encoding: .utf8)
+              else {
+                           throw CocoaError(.fileReadCorruptFile)
+              }
+              self.text = string
+    }
+    func snapshot(contentType: UTType) throws -> String {
+        return self.text
+    }
+    func fileWrapper(snapshot: String, configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = snapshot.data(using: .utf8)!
+        return .init(regularFileWithContents: data)
+    }
+}
+
+struct showSwitch:View {
+    @Binding var flag:Bool
+      var body: some View {
+        Toggle(isOn: self.$flag) { Text("Show TextEditor").foregroundColor(Color.black) }.frame(width:250)
+      }
+}
+struct showTextEditor: View {
+    @ObservedObject private var model = Model()
+    @Environment(\.undoManager) var undoManager
+    @Binding var text:String
+
+    var body: some View {
+        TextEditor(text: Binding(get: {
+                    self.text
+                }, set: {
+                    self.text = $0
+                    self.model.registerUndo($0, in: self.undoManager)
+                }))
+        .padding(3)
+        .frame(width: 300, height: 200)
+        .overlay( RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 1) )
+    }
+}
+class Model: ObservableObject {
+   @Published var text = ""
+
+   func registerUndo(_ newValue: String, in undoManager: UndoManager?) {
+       let oldValue = text
+       undoManager?.registerUndo(withTarget: self) { target in
+           target.text = oldValue
+       }
+       text = newValue
+   }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(document: MyTextDocument())
+    }
+}

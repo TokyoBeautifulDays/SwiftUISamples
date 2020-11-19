@@ -1,0 +1,39 @@
+struct TextStyle: ViewModifier {
+    let color: Color
+    func body(content: Content) -> some View {
+        content
+            .font(Font.largeTitle.weight(.bold))
+            .foregroundColor(Color.white)
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(color)
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        NavigationView {
+            SidebarView()         // delete this line if you choose Master-Detail navigation instead
+            MasterView()
+            DetailView()
+        }
+    }
+}
+struct SidebarView: View {
+   var body: some View {
+       Text("SidebarView").modifier(TextStyle(color:Color.red))
+        .navigationBarTitle(Text("Sidebar"))
+   }
+}
+struct MasterView: View {
+   var body: some View {
+       Text("MasterView").modifier(TextStyle(color:Color.blue))
+        .navigationBarTitle(Text("Master"))
+   }
+}
+struct DetailView: View {
+   var body: some View {
+       Text("DetailView").modifier(TextStyle(color:Color.gray))
+        .navigationBarTitle(Text("Detail"))
+   }
+}

@@ -1,0 +1,48 @@
+struct MyToolbar: ToolbarContent {
+    let label1:String
+    let label2:String
+    let b1: () -> Void
+    let b2: () -> Void
+
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button(label1, action: b1)
+        }
+
+        ToolbarItem(placement: .bottomBar) {
+            Button(label2, action: b2)
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        NavigationView{
+                NavigationLink(destination: SubView()) {
+                    Text("Push here to go to SubView")
+                     .toolbar {
+                          MyToolbar(label1:"Main1", label2:"Main2") {
+                                 // action
+                               } b2: {
+                                 // action
+                               }
+
+                     }
+                }
+        }
+    }
+}
+struct SubView: View {
+    var body: some View {
+        Text("SubView")
+             .toolbar {
+                 MyToolbar(label1:"SubView1", label2:"SubView2") {
+                          // action
+                       } b2: {
+                          // action
+                       }
+
+             }
+
+    }
+}

@@ -1,0 +1,56 @@
+struct ContentView: View {
+    let items = 1...20
+    let columns = [
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center)
+    ]
+    
+    private func headerView(_ index:Int) -> some View {
+        Text("Header \(index)")
+            .font(.system(size: 24, weight: .black, design: .default))
+            .padding()
+            .foregroundColor(Color.white)
+            .frame(maxWidth:.infinity)
+            .background(Color.black.brightness(0.6))
+    }
+    private func footerView(_ index:Int) -> some View {
+        Text("Footer \(index)")
+            .font(.system(size: 18, weight: .bold, design: .default))
+            .padding(10)
+            .foregroundColor(Color.white)
+            .frame(maxWidth:.infinity)
+            .background(Color.black.brightness(0.6))
+            .border(Color.gray)
+    }
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, alignment:.center, spacing:20, pinnedViews: [.sectionHeaders, .sectionFooters]) {
+                        
+                        ForEach(1..<5) { index in
+                            
+                            Section(header: headerView(index), footer: footerView(index)) {
+                                
+                                    ForEach(items, id: \.self) { item in
+                                        showImage(item: item)
+                                    }
+                            }
+                         }
+            }
+        }.frame(width:300, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}
+struct showImage: View {
+    var item:Int
+    var body: some View {
+        Image(systemName: "heart.fill")
+            .font(.system(size: 30))
+            .frame(width: 50, height: 50)
+            .foregroundColor(.gray)
+            .background(Color.red)
+            .cornerRadius(10)
+            .overlay(Text("\(item)").foregroundColor(.white))
+    }
+}

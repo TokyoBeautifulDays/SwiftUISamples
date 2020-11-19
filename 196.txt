@@ -1,0 +1,80 @@
+
+// (1) 下位ビューで定義
+
+final class Counter: ObservableObject {
+    @Published var count: Int = 0
+}
+struct ContentView: View {
+    @State var count: Int = 0
+    var body: some View {
+        VStack (alignment:.leading,spacing:20){
+            HStack {
+                Button("Push to add") { count += 1 }
+                Text("Parent View:   \(self.count)")
+            }
+            ChildViewForObservedObject()
+        }
+    }
+}
+struct ChildViewForObservedObject: View {
+    @ObservedObject var counter = Counter()
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(ObservedObject):   \(self.counter.count)")
+        }
+    }
+}
+
+
+// (2)　最上位ビューで定義
+
+struct ContentView: View {
+    @State var count: Int = 0
+    @ObservedObject var counter = Counter()
+    var body: some View {
+        VStack (alignment:.leading,spacing:20){
+            HStack {
+                Button("Push to add") { count += 1 }
+                Text("Parent View:   \(self.count)")
+            }
+            ChildViewForObservedObject(counter:self.counter)
+        }
+    }
+}
+struct ChildViewForObservedObject: View {
+    @ObservedObject var counter:Counter
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(ObservedObject):   \(self.counter.count)")
+        }
+    }
+}
+
+// (3) @StateObjectを利用
+
+struct ContentView: View {
+    @State var count: Int = 0
+    var body: some View {
+        VStack (alignment:.leading,spacing:20){
+            HStack {
+                Button("Push to add") { count += 1 }
+                Text("Parent View:   \(self.count)")
+            }
+            ChildViewForObservedObject()
+        }
+    }
+}
+struct ChildViewForStateObject: View {
+    @StateObject var counter = Counter()
+
+    var body: some View {
+        HStack {
+            Button("Push to add") { counter.count += 1 }
+            Text("Child View(StateObject):   \(self.counter.count)")
+        }
+    }
+}
+

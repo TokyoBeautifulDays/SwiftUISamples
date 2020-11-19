@@ -1,0 +1,19 @@
+struct ContentView: View {
+    let messages: [String] = ["a", "b"]
+
+    var body: some View {
+        NavigationView {
+            List (messages, id: \.self) { message in Text(message) }
+            .navigationTitle("Messages")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("B1-1") {}
+                    Button("B1-2") {}  // 表示されない
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("B2") {}   // B1-1に続いて表示される
+                }
+            }
+        }
+    }
+}

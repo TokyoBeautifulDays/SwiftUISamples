@@ -1,0 +1,35 @@
+struct ContentView: View {
+    private func headerView() -> some View {
+        Text("Header")
+            .font(.system(size: 24, weight: .black, design: .default))
+            .padding()
+            .foregroundColor(Color.white)
+            .frame(maxWidth:.infinity)
+            .background(Color.black.brightness(0.6))
+    }
+    private func footerView() -> some View {
+        Text("Footer")
+            .font(.system(size: 18, weight: .bold, design: .default))
+            .padding(10)
+            .foregroundColor(Color.white)
+            .frame(maxWidth:.infinity)
+            .background(Color.black.brightness(0.6))
+            .border(Color.gray)
+    }
+    var body: some View {
+        ScrollView {
+        
+            LazyVStack(alignment:.center, spacing:20, pinnedViews: [.sectionHeaders, .sectionFooters]) {
+                          
+                Section(header: headerView(), footer: footerView()) {
+
+                   ForEach(Array(stride(from: 0, to: 4, by: 1)), id: \.self)  { value in Text("Row \(value)") }
+                   ForEach(Array(stride(from: 100, to: 400, by: 100)), id: \.self)  { value in Text("Row \(value)") }
+                   ForEach(Array(stride(from: 1000, to: 4000, by: 1000)), id: \.self)  { value in Text("Row \(value)") }
+                   ForEach(Array(stride(from: 10000, to: 40000, by: 10000)), id: \.self)  { value in Text("Row \(value)") }
+                 }
+            }
+        }.frame(width:300, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}

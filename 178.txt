@@ -1,0 +1,42 @@
+
+// LazyVStack
+
+
+struct ContentView: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(Array(stride(from: 0, to: 4, by: 1)), id: \.self)  { value in
+                    Text("Row \(value)") }
+                ForEach(Array(stride(from: 100, to: 400, by: 100)), id: \.self)  { value in
+                    Text("Row \(value)") }
+                ForEach(Array(stride(from: 1000, to: 4000, by: 1000)), id: \.self)  { value in
+                        Text("Row \(value)") }
+                ForEach(Array(stride(from: 10000, to: 40000, by: 10000)), id: \.self)  { value in
+                        Text("Row \(value)") }
+            }
+        }
+    }
+}
+
+
+// VStack
+
+
+struct ContentView: View {
+    var body: some View {
+        ScrollView {
+            VStack {
+                ForEach(Array(stride(from: 0, to: 4, by: 1)), id: \.self)  { value in
+                    Text("Row \(value)") }
+                ForEach(Array(stride(from: 100, to: 400, by: 100)), id: \.self)  { value in
+                    Text("Row \(value)") }
+                ForEach(Array(stride(from: 1000, to: 4000, by: 1000)), id: \.self)  { value in
+                        Text("Row \(value)") }
+                ForEach(Array(stride(from: 10000, to: 40000, by: 10000)), id: \.self)  { value in
+                        Text("Row \(value)") }
+            }
+        }
+    }
+}
+

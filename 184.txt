@@ -1,0 +1,45 @@
+struct ContentView: View {
+    var body: some View {
+        NavigationView {
+            Text("Hello, World!").padding()
+                .navigationTitle("SwiftUI")
+                .toolbar {
+                    Group {
+                        ToolbarItem(placement: .automatic) {
+                            Button("automatic") {  }
+                        }
+                        ToolbarItem(placement: .bottomBar) {
+                            Button("cancel") {  }
+                        }
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("cancel") {  }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("confirm") {  }
+                        }
+                        ToolbarItem(placement: .destructiveAction) {
+                            Button("destructive") {  }
+                        }
+                        ToolbarItem(placement: .navigation) {
+                            Button("navigation") {  }
+                        }
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Leading") {  }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Trailing") {  }
+                        }
+                        ToolbarItem(placement: .primaryAction) {
+                            Button("primary") {  }
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Button("pricipal") {  }
+                        }
+                    }
+                    ToolbarItem(placement: .status) {
+                        Button("Status") {  }
+                    }
+                }
+        }
+    }
+}

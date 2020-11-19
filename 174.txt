@@ -1,0 +1,89 @@
+struct Item: Identifiable {
+    var id: Int
+    var name: String
+}
+struct ContentView: View {
+    @State var items :[Item] = [
+                                Item(id:1, name:"1"),
+                                Item(id:2, name:"2"),
+                                Item(id:3, name:"3"),
+                                Item(id:4, name:"4"),
+                                Item(id:5, name:"5"),
+                                Item(id:6, name:"6"),
+                                Item(id:7, name:"7")
+                               ]
+    @State var selectedItems: [Item] = []
+    
+    let columns = [
+        GridItem(.flexible(), spacing:20, alignment: .center),
+        GridItem(.flexible(), spacing:20, alignment: .center),
+        GridItem(.flexible(), spacing:20, alignment: .center)
+    ]
+    
+    var body: some View {
+        
+            VStack {
+
+                Spacer()
+                showGrid(text:"Item Options", columns: self.columns, from:self.$items, to:self.$selectedItems, color:Color.red)
+                
+                Spacer()
+                
+                showGrid(text:"Selected Items", columns: self.columns, from:self.$selectedItems, to:self.$items, color:Color.green)
+                Spacer()
+                Spacer()
+            }
+    }
+}
+struct showGrid: View {
+    var text:String
+    var columns:[GridItem]
+    @Binding var from:[Item]
+    @Binding var to:[Item]
+    var color:Color
+    
+    private func headerView(_ text:String) -> some View {
+        Text(text)
+            .font(.system(size: 24, weight: .black, design: .default))
+            .padding()
+            .foregroundColor(Color.white)
+            .frame(maxWidth:.infinity)
+            .background(Color.black.brightness(0.6))
+    }
+    
+    var body: some View {
+
+        ScrollView {
+            LazyVGrid(columns: columns, alignment:.center, spacing:20, pinnedViews:[.sectionHeaders]) {
+                Section(header:headerView(text)) {
+            
+                    ForEach(self.from) { item in showText(item: item, from:self.$from, to: self.$to, color:self.color) }
+                }
+            }
+        }.frame(width:300, height:200, alignment:.top)
+        .border(Color.gray)
+    }
+}
+struct showText: View {
+    var item:Item
+    @Binding var from:[Item]
+    @Binding var to:[Item]
+    var color:Color
+    @Namespace var namespace
+    var body: some View {
+        Text(item.name)
+            .frame(width: 60, height: 60)
+            .foregroundColor(.white)
+            .background(color)
+            .cornerRadius(10)
+            .matchedGeometryEffect(id: item.id, in: self.namespace)
+            .onTapGesture {
+                to.append(item)
+                from.removeAll { it -> Bool in
+                    if it.id == item.id { return true}
+                        else { return false }
+                }
+            }
+            .animation(.easeOut)
+    }
+}

@@ -1,0 +1,55 @@
+struct DialogStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width:300, height:150)
+            .position(x:200, y:300)
+    }
+}
+struct ContentView: View {
+    @AppStorage("username") private var username: String = "no name"
+//    @SceneStorage("username") private var username: String = "no name"
+    var body: some View {
+        NavigationView {
+            List {
+                NavigationLink(destination: Dialog1(username:self.$username).modifier(DialogStyle())){ Text("Dialog1") }
+                NavigationLink(destination: Dialog2(username:self.$username).modifier(DialogStyle())){ Text("Dialog2") }
+            }
+        }
+    }
+}
+struct Dialog1: View {
+    @Binding var username:String
+    @State var name:String = ""
+    var body: some View {
+        VStack {
+            Text("Welcome,\(username) !")
+                .font(.system(size: 20))
+                .fontWeight(.black)
+            HStack {
+                Text("Your name:")
+                TextField("Type your name", text:self.$name,
+                          onCommit: { username = name })
+                    .border(Color.gray, width:2)
+            }
+            
+        }
+    }
+}
+struct Dialog2: View {
+    @Binding var username:String
+    @State var name:String = ""
+    var body: some View {
+        VStack {
+            Text("Welcome,\(username) !")
+                .font(.system(size: 20))
+                .fontWeight(.black)
+            HStack {
+                Text("Your name:")
+                TextField("Type your name", text:self.$name,
+                          onCommit: { username = name })
+                    .border(Color.gray, width:2)
+            }
+            
+        }
+    }
+}

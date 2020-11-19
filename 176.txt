@@ -1,0 +1,68 @@
+// FileDocumentの記述例
+import UniformTypeIdentifiers
+
+class Message: ObservableObject {
+    @Published var text:String = "Hello World"
+    @Published var flag:Bool = false
+}
+@main
+struct MyTextApp: App {
+    var body: some Scene {
+        DocumentGroup(newDocument: MyTextDocument()) { file in
+            ContentView(document: file.$document)
+        }
+    }
+}
+
+struct ContentView: View {
+    @Binding var document:MyTextDocument
+    var body: some View {
+          VStack {
+            showSwitch(message:$document.message).position(x:200, y:300)
+            if document.message.flag { showTextEditor(message:$document.message).position(x:200, y:60) }
+            }
+    }
+}
+struct MyTextDocument: FileDocument {
+    static var readableContentTypes = [UTType.plainText]
+    @ObservedObject var message:Message
+
+    init(message: Message = Message()) {
+        self.message = message
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        self.init()
+        guard let data = configuration.file.regularFileContents,
+              let string = String(data: data, encoding: .utf8)
+        else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        message.text = string
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = message.text.data(using: .utf8)!
+        return .init(regularFileWithContents: data)
+    }
+}
+struct showSwitch:View {
+      @Binding var message:Message
+      var body: some View {
+        Toggle(isOn: self.$message.flag) { Text("Show TextEditor").foregroundColor(Color.black) }.frame(width:250)
+      }
+}
+struct showTextEditor: View {
+    @Binding var message:Message
+    var body: some View {
+        TextEditor(text:self.$message.text)
+            .padding(3)
+            .frame(width: 300, height: 200)
+            .overlay( RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 1) )
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(document: .constant(MyTextDocument()))
+    }
+}

@@ -1,0 +1,67 @@
+// LazyVGrid
+
+struct ContentView: View {
+    let items = 1...30
+    let columns = [
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center)
+    ]
+
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, alignment:.center, spacing:20) {
+                ForEach(items, id: \.self) { item in
+                    showImage(item: item)
+                }
+            }
+        }.frame(width:300, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}
+struct showImage: View {
+    var item:Int
+    var body: some View {
+        Image(systemName: "heart.fill")
+            .font(.system(size: 30))
+            .frame(width: 50, height: 50)
+            .foregroundColor(.gray)
+            .background(Color.red)
+            .cornerRadius(10)
+            .overlay(Text("\(item)").foregroundColor(.white))
+    }
+}
+
+// LazyHGrid
+
+struct ContentView: View {
+    let items = 1...30
+    let rows = [
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center),
+        GridItem(.fixed(50), spacing:20, alignment: .center)
+    ]
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: rows, alignment:.center, spacing:20) {
+                ForEach(items, id: \.self) { item in
+                    showImage(item: item)
+                }
+            }
+        }.frame(width:350, height:400, alignment: .center)
+        .border(Color.gray)
+    }
+}
+struct showImage: View {
+    var item:Int
+    var body: some View {
+        Image(systemName: "heart.fill")
+            .font(.system(size: 30))
+            .frame(width: 50, height: 50)
+            .foregroundColor(.red)
+            .background(Color.gray)
+            .cornerRadius(10)
+            .overlay(Text("\(item)").foregroundColor(.white))
+    }
+}

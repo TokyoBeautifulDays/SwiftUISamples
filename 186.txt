@@ -1,0 +1,20 @@
+struct ContentView: View {
+    let messages: [String] = ["a", "b"]
+
+    var body: some View {
+        NavigationView {
+            List (messages, id: \.self) { message in Text(message) }
+            .navigationTitle("Messages")
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button("B1-1") {}
+                    Button("B1-2") {}
+                }
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button("B2-1") {}
+                    Button("B2-2") {}
+                }
+            }
+        }
+    }
+}
